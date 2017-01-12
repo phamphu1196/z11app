@@ -1,0 +1,40 @@
+img {
+	width: 100%;
+}
+h4 {
+	font-style: italic;
+	text-align: center;
+}
+.formedit input {
+	width: 100%;
+	padding: 8px;
+	border-radius:5px;
+	border: none;
+	border-bottom: 2px solid blue;
+}
+button[type=submit] {
+	margin-top: 10px;
+	width: 120px;
+	height: 36px;
+	background: blue;
+	color: #fff;
+}
+.inner-addon { 
+    position: relative; 
+}
+
+.inner-addon .glyphicon {
+  position: absolute;
+  padding: 10px;
+  pointer-events: none;
+}
+
+.left-addon .glyphicon  { left:  0px;}
+.right-addon .glyphicon { right: 0px;}
+
+.left-addon input  { 
+	padding-left:  40px; 
+}
+.right-addon input { 
+	padding-right: 40px; 
+}
