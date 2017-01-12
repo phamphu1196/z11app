@@ -61,9 +61,9 @@
 			<table class="table table-hover">
 				<thead>
 					<tr>
-						<th class="stt">Folder ID</th>
-						<th class="fold_culum">Folder Name</th>
-						<th class="cate_culum">Category Code</th>
+						<th class="stt">Package ID</th>
+						<th class="fold_culum">Package Name</th>
+						<th class="cate_culum">Folder Code</th>
 						<th class="cate_culum_id">Category ID</th>
 						<th class="edit_culum">Edit</th>
 						<th class="delete_culum">Delete</th>
@@ -72,6 +72,7 @@
 				<tbody>
 					@foreach($categories as $category)
 						@foreach($category['folder'] as $folder)
+						
 							<tr class="cate">
 								<td class="stt">{{ $folder['folder_id'] }}</td>
 								<td class="fold_culum">

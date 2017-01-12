@@ -63,6 +63,16 @@
           width: 80%;
           margin-left: 50px;
         }
+        .nav li.nav-head {
+          background: #3498db;
+          color: white;
+          font-size: 18px;
+          padding: 10px;
+        }
+        .nav li.nav-items div ul li a {
+          padding-left: 50px; 
+          color: #e74c3c;
+        }
     </style>
 @endsection
 @section('navbar')
@@ -70,11 +80,23 @@
 @endsection
 @section('sidebar-total-top')
   @include('includes.sidebar-top')
-  <li class="active"><a href="{{ url('/') }}"><i class="fa fa-bars fa-fw"></i>Chuyen muc</a></li>
-    @foreach($categories as $category)
-        <li><a href="{{ url('/'.$category['category_code']) }}"><i class="fa fa-list-alt fa-fw"></i>{{ $category['category_code'] }}</a></li>
-    @endforeach
+  <li class="nav-head"><i class="fa fa-bars fa-fw" disabled></i>Chuyên mục</li>
+  <?php $i = 1; ?>
+  @foreach($categories as $category)
+    <?php $href = "collapse".$i++; ?>
+    <li class="nav-items">
+      <a data-toggle="collapse" data-parent="#accordion" href="#{{$href}}"><i class="fa fa-list-alt fa-fw"></i>{{ $category['category_code'] }}</a>
+      <div id="{{$href}}" class="panel-collapse collapse">
+        <ul class="nav nav-stacked">
+          @foreach ($category['folder'] as $folder)
+            <li><a href="{{ url($category['category_code'].'/'.$folder['translate_name_text'][0]['text_value']) }}">{{ $folder['translate_name_text'][0]['text_value'] }}</a></li>
+          @endforeach
+        </ul>
+      </div>
+    </li>
+  @endforeach
 @endsection
+
 @section('content-sidebar-total-top')
   @include('includes.sidebar-middle')
     <div class="button-add">
@@ -84,20 +106,20 @@
      <hr>
       @foreach($categories as $category)
             @foreach($category['folder'] as $folder)
-                 <a href="{{ url('/folder/'.$folder['folder_id']) }}">
-            <div class="col-md-3 text-center">
-                <div class="panel panel-warning panel-pricing">
-                        <img src="{{ asset('image/gx2.jpg') }}" style="width: 100%;" alt="">
-                        <h3>{{$folder['item_code']}}</h3>
-                    <div class="panel-body text-center">
-                    
-                    </div>
-                    <ul class="list-group text-center">
+                 <a href="{{ url($category['category_code'].'/'.$folder['translate_name_text'][0]['text_value']) }}">
+                    <div class="col-md-3 text-center">
+                        <div class="panel panel-warning panel-pricing">
+                            <img src="{{ asset('image/gx2.jpg') }}" style="width: 100%;" alt="">
+                            <h3>{{$folder['translate_name_text'][0]['text_value']}}</h3>
+                            {{-- <div class="panel-body text-center">
+                            
+                            </div>
+                            <ul class="list-group text-center">
 
-                    </ul>
-                </div>
-            </div>
-        </a>
+                            </ul> --}}
+                        </div>
+                    </div>
+                </a>
         @endforeach
       @endforeach
 @endsection

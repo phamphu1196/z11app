@@ -85,7 +85,7 @@
 @endsection
 @section('sidebar-total-top')
   @include('includes.sidebar-top')
-  <li class="active"><a href="{{ url($category['category_code'].'/'.$folder['translate_name_text'][0]['text_value']) }}">Chuyen muc: {{ $folder['translate_name_text'][0]['text_value'] }}</a></li>
+  <li class="nav-head"><a href="{{ url($category['category_code'].'/'.$folder['translate_name_text'][0]['text_value']) }}">Chuyen muc: {{ $folder['translate_name_text'][0]['text_value'] }}</a></li>
                 {{-- {{ $folders = $category['folder'] }} --}}
                 @foreach($packages as $package)
                     <li><a href="{{ url($category['category_code'].'/'.$folder['translate_name_text'][0]['text_value'].'/'.$package['translate_name_text'][0]['text_value']) }}">{{ $package['translate_name_text'][0]['text_value'] }}</a></li>
@@ -103,18 +103,9 @@
             <div class="col-md-3 text-center">
                 <div class="panel panel-warning panel-pricing">
                         <img src="{{ asset('image/gx3.jpg') }}" style="width: 100%;" alt="">
-                        <h3>{{$package['item_code']}}</h3>
+                        <h3>{{$package['translate_name_text'][0]['text_value']}}</h3>
                     <div class="panel-body text-center">
-                    
-                        {{-- <p>de baidasds</p> --}}
-                    </div>
-                    <ul class="list-group text-center">
-
-                    </ul>
-                    <div class="panel-footer">
-
-<label for="input-7" class="control-label">Rate This</label>
-<input id="input-7" name="input-7" class="rating-loading">
+                      
                     </div>
                 </div>
             </div>
@@ -154,12 +145,7 @@
 @section('sidebar-total-buttom')
   @include('includes.sidebar-category-buttom')
 @endsection
+
 @section('script')
-   <script>
-$(document).on('ready', function(){
-    $("#input-7").rating().on("rating.change", function(event, value, caption) {
-        $("#input-7").rating("refresh", {disabled:true, showClear:false});
-    });
-});
-</script>
+
 @stop

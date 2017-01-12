@@ -87,7 +87,6 @@
 					<input type="hidden" name="_method" value="DELETE">
 					<div class="modal-body">
 					<div class="form-group">
-						<label for="">label</label>
 						<input type="hidden" name="category_id" id="category_id" class="form-control" value="" required="required" pattern="" title="">
 						Ban co chac muon delete <strong class="cate_code"></strong> khong
 					</div>
