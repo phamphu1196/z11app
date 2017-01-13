@@ -54,21 +54,20 @@ Route::post('language', 'UserController@postLanguage');
 
 
 //-------------------------------------------------------------------------------------
-// Route::group(['middleware' => 'users'], function() {
+Route::group(['middleware' => 'users'], function() {
 
-//     Route::get('edituser', 'UserController@editUser');
-//     Route::post('edituser', 'UserController@postEditUser');
+    Route::get('edituser', 'UserController@editUser');
+    Route::put('edituser', 'UserController@putEditUser');
+    Route::get('/timeline', 'UserController@showDocument');
+    Route::get('/categories/{id?}', 'CategoryController@getCategory');
+    Route::get('/folder/{id?}', 'FolderController@getFolder');
+    Route::get('logout', 'UserController@postLogout');
+    Route::get('create', 'CategoryController@createQuestion');
 
-//     Route::get('/timeline', 'UserController@showDocument');
-//     Route::get('/categories/{id?}', 'CategoryController@getCategory');
-//     Route::get('/folder/{id?}', 'FolderController@getFolder');
-//     Route::get('logout', 'UserController@postLogout');
-//     Route::get('create', 'CategoryController@createQuestion');
+    Route::post('addfolder', 'FolderControlle@postAddFolder');
 
-//     Route::post('addfolder', 'FolderControlle@postAddFolder');
-
-//     // Route::post('edituser', 'UserController@postEditUser');
-// });
+    // Route::post('edituser', 'UserController@postEditUser');
+});
 
 // Route::get('/',['as'=>'home', 'uses'=> 'HomeController@index']);
 

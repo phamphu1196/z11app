@@ -15,21 +15,21 @@
 				@if(Session::has('token'))
 					<li class="lgg">
 						<select name="language" id="language" class="form-control" required="required">
-							<option value="vi">VN</option>
-							<option value="en" selected>EN</option>
+							<option value="vi">Việt Nam</option>
+							<option value="en" selected>English</option>
 						</select>
 					</li>
 					<form class="navbar-form navbar-right search-form" role="search">
 						<input type="text" class="form-control" placeholder="Search" />
 					</form>
-					<li class="active"><a href="{{ url('purchases') }}" target="_blank">Nap tien<span class="sr-only">(current)</span></a></li>
+					<li class="active"><a href="{{ url('purchases') }}" target="_blank">Nạp tiền<span class="sr-only">(current)</span></a></li>
 					
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ session('name') }}<span class="caret"></span></a>
 						<ul class="dropdown-menu" role="menu">
-							<li><a href="{{ url('timeline') }}">Tai lieu ca nhan</a></li>
-							<li><a href="{{ url('edituser') }}">Chinh sua thong tin</a></li>
-							<li><a href="{{ url('/admin/dashboard') }}">Admin</a></li>
+							<li><a href="{{ url('timeline') }}">Tài liệu cá nhân</a></li>
+							<li><a href="{{ url('edituser') }}">Chỉnh sửa thông tin</a></li>
+							<li><a href="{{ url('/admin/dashboard') }}">Quản trị</a></li>
 							<li><a href="{{ url('logout') }}"> <i class="fa fa-sign-out"></i>Đăng xuất</a></li>
 						</ul>
 					</li>
