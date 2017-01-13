@@ -57,6 +57,7 @@
           clear: both;
         }
         .button-add button {
+          width: 10%;
           float: right;
         }
         .modal-body {
@@ -72,6 +73,10 @@
         .nav li.nav-items div ul li a {
           padding-left: 50px; 
           color: #e74c3c;
+        }
+        .links {
+          width: 90%;
+          float: left;
         }
     </style>
 @endsection
@@ -99,6 +104,11 @@
 
 @section('content-sidebar-total-top')
   @include('includes.sidebar-middle')
+    <div class="links">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
+      </ol>
+    </div>
     <div class="button-add">
         <button type="button" class="btn btn-success" data-toggle="modal" href='#modal-id'>Add Folder</button>
      </div>

@@ -70,6 +70,7 @@
         }
         .button-add button {
           float: right;
+          width: 10%;
         }
         .modal-body {
           width: 80%;
@@ -78,6 +79,10 @@
         /*.button-add button {
           margin-top: 10px;
         }*/
+        .links {
+          float: left;
+          width: 90%;
+        }
     </style>
 @endsection
 @section('navbar')
@@ -94,6 +99,12 @@
 
 @section('content-sidebar-total-top')
   @include('includes.sidebar-middle')
+    <div class="links">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{{ url($category['category_code'].'/'.$folder['translate_name_text'][0]['text_value']) }}">{{ $folder['translate_name_text'][0]['text_value'] }}</a></li>
+      </ol>
+    </div>
       <div class="button-add">
         <button type="button" class="btn btn-success" data-toggle="modal" href='#modal-id'>Add Folder</button>
      </div>

@@ -12,6 +12,7 @@
 */
 Route::group(['namespace' => 'Admin','middleware' => 'admin'], function(){
 	Route::get("/admin/dashboard",'AdminController@getDashboard');
+	Route::get('/admin/manager-member', 'UserController@getAllUser');
 	Route::get('admin/category/{id?}', 'CategoryController@getCategoryId');
 	Route::post('admin/category/add', function() {
 	    //
@@ -22,10 +23,13 @@ Route::group(['namespace' => 'Admin','middleware' => 'admin'], function(){
 	Route::put('admin/category/edit', function() {
 	    //
 	});
-	Route::get('admin/manager-member', 'MemberController@managerMember');
+	// Route::get('admin/manager-member', 'MemberController@managerMember');
 	Route::get('admin/categories', 'CategoryController@getAllCategory');
 	Route::get('admin/folders', 'FolderController@getAllFolders');
 	Route::get('admin/packages', 'PackageController@getAllPackage');
+
+	Route::get('admin/users/{id}', 'UserController@getUserId');
+	Route::delete('admin/user/delete', 'UserController@deleteUserId');
 });
 Route::get('login', 'UserController@getLogin');
 Route::post('login', 'UserController@postLogin');
