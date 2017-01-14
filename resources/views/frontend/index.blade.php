@@ -115,10 +115,6 @@
         <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
       </ol>
     </div>
-
-    @include('includes.sidebar-middle')
-
-
     <div class="button-add">
         <button type="button" class="btn btn-success" data-toggle="modal" href='#modal-id'>Add Folder</button>
     </div>
