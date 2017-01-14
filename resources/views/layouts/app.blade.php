@@ -46,6 +46,14 @@
         .lgg select {
             background: #3BE5FA;
         }
+        .back-to-top {
+            cursor: pointer;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display:none;
+        }
+
     </style>
 </head>
 <body id="app-layout">
@@ -58,6 +66,7 @@
     @yield('end-sidebar-total-top')
 
     @yield('content')
+    <a id="back-to-top" href="#" class="btn btn-primary btn-lg back-to-top" role="button" title="Click to return on the top page" data-toggle="tooltip" data-placement="left"><span class="glyphicon glyphicon-chevron-up"></span></a>
     <!-- JavaScripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
@@ -78,6 +87,26 @@
                     
                 });
             });
+        });
+        $(document).ready(function(){
+             $(window).scroll(function () {
+                    if ($(this).scrollTop() > 50) {
+                        $('#back-to-top').fadeIn();
+                    } else {
+                        $('#back-to-top').fadeOut();
+                    }
+                });
+                // scroll body to 0px on click
+                $('#back-to-top').click(function () {
+                    $('#back-to-top').tooltip('hide');
+                    $('body,html').animate({
+                        scrollTop: 0
+                    }, 800);
+                    return false;
+                });
+                
+                $('#back-to-top').tooltip('show');
+
         });
     </script>
 </body>

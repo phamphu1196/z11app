@@ -64,6 +64,9 @@
 		.user-right  img {
 			width: 80%;
 		}
+		.edit-header {
+			background: #199E80;
+		}
     </style>
 @endsection
 @section('sidebar-total-top')
@@ -231,15 +234,17 @@
 				</div>
 				<form action="{{ url('admin/user/delete') }}" method="POST" role="form">
 					<input type="hidden" name="_method" value="DELETE">
+					<input type="hidden" name="_token" value="{{ csrf_token() }}">
 					<div class="modal-body">
 					<div class="form-group">
+					<input type="hidden" name="delete-user-id" id="delete-user-id" class="form-control" value="" required="required" pattern="" title="">
 						Ban co chac muon delete <strong class="USER_NAME"></strong> khong
 					</div>
 					
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-						<button type="button" class="btn btn-danger">Delete Category</button>
+						<button type="submit" class="btn btn-danger">Delete Category</button>
 					</div>
 				</form>
 				
@@ -257,6 +262,7 @@
 			});
 			$('.view').click(function(event) {
 				/* Act on the event */
+				// alert(1);
 				var user_id = $(this).parents('.member').children('.user_id_culum').text();
 				var url_ = '/z11app/public/admin/users/'+user_id;
 				$.get(url_, function(data) {
@@ -264,9 +270,16 @@
 					$('#NAME').text(data['profile']['name']);
 					$('#EMAIL').text(data['email']);
 					$('#GENDER').text(data['profile']['gender']);
-					$('#TYPE_USER').text(data['type_user']['name_role']);
-					$('#DEADLINE').text(data['type_user']['deadline']);
-					$('#EXPIRED').text(data['type_user']['expired']);
+					if(data['type_user']) {
+						$('#TYPE_USER').text(data['type_user']['name_role']);
+						$('#DEADLINE').text(data['type_user']['deadline']);
+						$('#EXPIRED').text(data['type_user']['expired']);
+					}
+					else{
+						$('#TYPE_USER').text('');
+						$('#DEADLINE').text('');
+						$('#EXPIRED').text('');
+					}
 					$('#IMAGE').attr('src', data['profile']['image']);
 				});
 			});
@@ -274,20 +287,22 @@
     			/* Act on the event */
     			event.preventDefault();
     			var user_id = $(this).parents('.member').children('.user_id_culum').text();
-    			alert(user_id);
+    			// alert(user_id);
 				var url_ = '/z11app/public/admin/users/'+user_id;
 	    		$.get(url_, function(data) {
-	    			$('.USER_NAME').text(data['profile']['name'];
+	    			$('.USER_NAME').text(data['profile']['name']);
+	    			$('#delete-user-id').val(data['id']);
 	    		});
     		});
     		$('.edit').click(function(event) {
     			/* Act on the event */
     			event.preventDefault();
-    			var category_id = $(this).parents('.cate').children('.category_id').val();
-    			var url = '/z11app/public/admin/category/'+category_id;
-    			$.get(url, function(data) {
-	    			$('#catego_id').val(data['category_id']);
-	    			$('#category_code').val(data['category_code']);
+    			var user_id = $(this).parents('.member').children('.user_id_culum').text();
+    			var url_ = '/z11app/public/admin/users/'+user_id;
+    			$.get(url_, function(data) {
+    				alert(1);
+	    			// $('#catego_id').val(data['category_id']);
+	    			// $('#category_code').val(data['category_code']);
 	    			// $('#image').val(data['image']);
 	    		});
     		});

@@ -15,8 +15,9 @@
 				@if(Session::has('token'))
 					<li class="lgg">
 						<select name="language" id="language" class="form-control" required="required">
-							<option value="vi">Việt Nam</option>
-							<option value="en" selected>English</option>
+							@foreach($languages as $language)
+								<option value="{{$language['language_code']}}">{{ $language['description'] }}</option>
+							@endforeach
 						</select>
 					</li>
 					<form class="navbar-form navbar-right search-form" role="search">

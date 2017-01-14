@@ -32,6 +32,7 @@ class UserController extends Controller
     }
     public function deleteUserId(Request $request)
     {
+    	$data = $request->all();
     	
     }
 }

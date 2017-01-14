@@ -97,22 +97,22 @@ $(document).ready(function()
 	});
 
 	//Easing Scroll replace Anchor name in URL and Offset Position
-	$(function(){
-		$('a[href*=#]:not([href=#])').click(function()
-		{
-			if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
+	// $(function(){
+	// 	$('a[href*=#]:not([href=#])').click(function()
+	// 	{
+	// 		if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
 
-				var target = $(this.hash);
-				target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
-				if (target.length) {
-					$('html,body').animate({
-						scrollTop: target.offset().top -420
-					}, 3500, 'easeOutBounce');
-					return false;
-				}
-			}
-		});
-	});
+	// 			var target = $(this.hash);
+	// 			target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+	// 			if (target.length) {
+	// 				$('html,body').animate({
+	// 					scrollTop: target.offset().top -420
+	// 				}, 3500, 'easeOutBounce');
+	// 				return false;
+	// 			}
+	// 		}
+	// 	});
+	// });
 });
 $(document).ready(function(){
     $(".dropdown").hover(            
