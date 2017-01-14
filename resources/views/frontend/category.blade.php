@@ -88,7 +88,7 @@
   <li class="active"><a href="{{ url('/'.$category['category_code']) }}">Chuyen muc: {{ $category['category_code'] }}</a></li>
                 {{-- {{ $folders = $category['folder'] }} --}}
                 @foreach($folders as $folder)
-                    <li><a href="{{ url($category['category_code'].'/'.$folder['translate_name_text'][0]['text_value']) }}">{{ $folder['item_code'] }}</a></li>
+                    <li><a href="{{ url($category['category_code'].'/'.$folder['translate_name_text'][session("language")]['text_value']) }}">{{ $folder['item_code'] }}</a></li>
                 @endforeach
 @endsection
 

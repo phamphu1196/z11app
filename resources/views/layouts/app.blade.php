@@ -73,7 +73,7 @@
     @yield('script')
     <script type="text/javascript">
         $(document).ready(function() {
-            $('select option[value="1"]').attr("selected",true);
+            $('select option[value="0"]').attr("selected",true);
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -83,12 +83,14 @@
                 /* Act on the event */
                 event.preventDefault();
                 var language = $(this).val();
-                // alert(language);
                 var url_ = '/z11app/public/language';
-                $.post(url_, {language: language}, function(data, textStatus, xhr) {
-                    
+                $.post(url_, {
+                    language: language
+                }, function(data, textStatus, xhr) {
+                    location.reload();
                 });
             });
+            
         });
         $(document).ready(function(){
              $(window).scroll(function () {

@@ -59,6 +59,7 @@ class UserController extends Controller
     {
         $request->session()->forget('token');
         $request->session()->forget('id');
+        $request->session()->forget('language');
         return redirect('login');
     }
 
@@ -125,11 +126,20 @@ class UserController extends Controller
     public function postLanguage(Request $request)
     {
         $language = $request->all();
+<<<<<<< HEAD
         dd($language->language);
         if ($request->session()->has('language')){
             $request->session()->forget('language');
         }
         $request->session()->put('language', $language->language);
+=======
+        // dd($language['language']);
+        if ($request->session()->has('language')){
+            $request->session()->forget('language');
+        }
+        $request->session()->put('language', $language['language']);
+        return redirect('/');
+>>>>>>> b12c946b4429ba46b45bb066cf92a0e07929cd08
     }
 
     public function getPurchases()

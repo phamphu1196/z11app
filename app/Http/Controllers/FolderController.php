@@ -10,7 +10,7 @@ use GuzzleHttp\Client as GuzzleHttpClient;
 use GuzzleHttp\Exception\RequestException;
 class FolderController extends Controller
 {
-    public function getFolder($category_code, $translate_name_text)
+    public function getFolder(Request $request,$category_code, $translate_name_text)
     {
     	try {
             $client = new GuzzleHttpClient();
@@ -37,6 +37,7 @@ class FolderController extends Controller
             }
           	$folder = $folders[$j-1];
             $packages = $folder['packages'];
+            // dd($request->session()->get('language'));
           	return view('frontend.folder')->with('category', $category)->with('folder', $folder)->with('packages',$packages); 
       } catch (RequestException $re) {
           echo "con dada";
