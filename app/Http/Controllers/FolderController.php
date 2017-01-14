@@ -12,15 +12,12 @@ class FolderController extends Controller
 {
     public function getFolder($category_code, $translate_name_text)
     {
-        // dd($translate_name_text);
     	try {
             $client = new GuzzleHttpClient();
             $categories = $client->request('GET', 'http://kien.godfath.com/api/v1/categories/all/0'); 
-            // dd($categories);
  
             $content = json_decode($categories->getBody()->getContents(), true);
             $categories= $content['metadata'];
-            // dd($categories);
             $i = 0;
             $j = 0;
             foreach ($categories as $value) {
@@ -31,7 +28,6 @@ class FolderController extends Controller
                 
             }
             $category = $categories[$i-1];
-            // dd($categories[$i-1]);
             $folders = $categories[$i-1]['folder'];
             foreach ($folders as $value) {
               $j++;
@@ -39,7 +35,7 @@ class FolderController extends Controller
                     break;
                 }
             }
-          	$folder= $folders[$j-1];
+          	$folder = $folders[$j-1];
             // var_dump($folder);
             // dd($folder);
             $packages = $folder['packages'];
@@ -54,7 +50,31 @@ class FolderController extends Controller
 
     public function postAddFolder(Request $request)
     {
-    	$data = $request->all();
+    	try {
+            $data = $request->all();
+            
+            $headers = array([
+                'Authorization'=> 'Bearer {'.$request->session()->get('token').'}'
+            ]);
+            $client = new GuzzleHttpClient(['headers' => $headers]);
+            // dd($token);
+            $json_text_value = '{"'.$request->session()->get('language').'":"'.$data['text_value'].'"}';
+            $json = '';
+            $res = $client->request('POST', 'http://kien.godfath.com/api/v1/folders', [
+                'form_params' => [
+                    'category_id' => $data['category_id'],
+                    'text_value' => $data['text_value'],
+                    'describe_value' => $data['describe_value']
+                ]
+            ]);
+            dd($res);
+            $json = json_decode($res->getBody(),true);
+            dd($json);
+            
+            return redirect('/');       
+        } catch (ClientErrorResponseException $exception) {
+            $responseBody = $exception->getResponse()->getBody(true);
+        }
       
     }
 }

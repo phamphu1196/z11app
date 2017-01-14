@@ -1,7 +1,9 @@
 @extends('layouts.app')
+
 @section('title')
 	Z11 App
 @endsection
+
 @section('style')
     <link rel="stylesheet" href="{{ asset('/css/sidebar.css') }}">
     <style type="text/css">
@@ -75,95 +77,105 @@
         }
     </style>
 @endsection
+
 @section('navbar')
-  @include('includes.navbar')
+    @include('includes.navbar')
 @endsection
+
 @section('sidebar-total-top')
-  @include('includes.sidebar-top')
-  <li class="nav-head"><i class="fa fa-bars fa-fw" disabled></i>Chuyên mục</li>
-  <?php $i = 1; ?>
-  @foreach($categories as $category)
-    <?php $href = "collapse".$i++; ?>
-    <li class="nav-items">
-      <a data-toggle="collapse" data-parent="#accordion" href="#{{$href}}"><i class="fa fa-list-alt fa-fw"></i>{{ $category['category_code'] }}</a>
-      <div id="{{$href}}" class="panel-collapse collapse">
-        <ul class="nav nav-stacked">
-          @foreach ($category['folder'] as $folder)
-            <li><a href="{{ url($category['category_code'].'/'.$folder['translate_name_text'][0]['text_value']) }}">{{ $folder['translate_name_text'][0]['text_value'] }}</a></li>
-          @endforeach
-        </ul>
-      </div>
-    </li>
-  @endforeach
+    @include('includes.sidebar-top')
+
+    <li class="nav-head"><i class="fa fa-bars fa-fw" disabled></i>Chuyên mục</li>
+    <?php $i = 1; ?>
+    @foreach($categories as $category)
+        <?php $href = "collapse".$i++; ?>
+        <li class="nav-items">
+            <a data-toggle="collapse" data-parent="#accordion" href="#{{$href}}"><i class="fa fa-list-alt fa-fw"></i>{{ $category['category_code'] }}</a>
+            <div id="{{$href}}" class="panel-collapse collapse">
+                <ul class="nav nav-stacked">
+                @foreach ($category['folder'] as $folder)
+                    <li><a href="{{ url($category['category_code'].'/'.$folder['translate_name_text'][0]['text_value']) }}">{{ $folder['translate_name_text'][0]['text_value'] }}</a></li>
+                @endforeach
+                </ul>
+            </div>
+        </li>
+    @endforeach
 @endsection
 
 @section('content-sidebar-total-top')
-  @include('includes.sidebar-middle')
+    @include('includes.sidebar-middle')
+
     <div class="button-add">
         <button type="button" class="btn btn-success" data-toggle="modal" href='#modal-id'>Add Folder</button>
-     </div>
-     <div class="clearnfix"></div>
-     <hr>
-      @foreach($categories as $category)
-            @foreach($category['folder'] as $folder)
-                 <a href="{{ url($category['category_code'].'/'.$folder['translate_name_text'][0]['text_value']) }}">
-                    <div class="col-md-3 text-center">
-                        <div class="panel panel-warning panel-pricing">
-                            <img src="{{ asset('image/gx2.jpg') }}" style="width: 100%;" alt="">
-                            <h3>{{$folder['translate_name_text'][0]['text_value']}}</h3>
-                            {{-- <div class="panel-body text-center">
-                            
-                            </div>
-                            <ul class="list-group text-center">
+    </div>
+    <div class="clearnfix"></div>
+    <hr>
 
-                            </ul> --}}
-                        </div>
-                    </div>
-                </a>
+    @foreach($categories as $category)
+        @foreach($category['folder'] as $folder)
+        <a href="{{ url($category['category_code'].'/'.$folder['translate_name_text'][0]['text_value']) }}">
+            <div class="col-md-3 text-center">
+                <div class="panel panel-warning panel-pricing">
+                <img src="{{ asset('image/gx2.jpg') }}" style="width: 100%;" alt="">
+                <h3>{{$folder['translate_name_text'][0]['text_value']}}</h3>
+                </div>
+            </div>
+        </a>
         @endforeach
-      @endforeach
+    @endforeach
 @endsection
+
 @section('end-sidebar-total-top')
-  @include('includes.sidebar-buttom')
+    @include('includes.sidebar-buttom')
 @endsection
 
 @section('content')
-     <div class="modal fade" id="modal-id">
-       <div class="modal-dialog">
-         <div class="modal-content">
-           <div class="modal-header">
-             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-             <h4 class="modal-title">Them Thu Muc</h4>
-           </div>
-           <div class="modal-body">
-             <form action="{{ url('addfolder') }}" method="POST" role="form">
-             <input type="hidden" name="language" id="language" class="form-control" value="en" required="required" title="">
-             <div class="form-group">
-                 <label for="">Chon category:</label>
-                 <select name="category_id" id="category_id" class="form-control" required="required">
-                  @foreach($categories as $category)
-                      <option value="{{ $category['category_id'] }}">{{ $category['category_code'] }}</option>
-                  @endforeach
-                 </select>
-               </div> 
-               <div class="form-group">
-                 <label for="">Ten thu muc:</label>
-                 <input type="text" class="form-control" id="text_value" name="text_value" placeholder="Ten thu muc">
-               </div>
-               <div class="form-group">
-                 <label for="">Mieu ta thu muc:</label>
-                 <input type="text" class="form-control" id="describe_value" name="describe_value" placeholder="Mieu ta thu muc">
-               </div>   
-               <div class="form-group">
-                 <input type="hidden" class="form-control" id="Authorization" name="Authorization" value="Bearer {\{{session('token')}}\}" placeholder="Mieu ta thu muc">
-               </div> 
-               <button type="submit" id="add_folder" name="add_folder" class="btn btn-primary">Add Folder</button>
-             </form>
-           </div>
-         </div>
-       </div>
-     </div>
+    <div class="modal fade" id="modal-id">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Thêm thư mục</h4>
+                </div>
+
+                <div class="modal-body">
+                    <form action="{{ url('addfolder') }}" method="POST" role="form">
+                        <input type="hidden" name="language" id="language" class="form-control" value="en" required="required" title="">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <div class="form-group">
+                            <label for="">Chọn chủ đề</label>
+                            <select name="category_id" id="category_id" class="form-control" required="required">
+                                @foreach($categories as $category)
+                                    <option value="{{ $category['category_id'] }}">{{ $category['category_code'] }}</option>
+                                @endforeach
+                            </select>
+                        </div> 
+                        <div class="form-group">
+                            <label for="">Tên</label>
+                            <input type="text" class="form-control" id="text_value" name="text_value" placeholder="Ten thu muc">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Mô tả</label>
+                            <input type="text" class="form-control" id="describe_value" name="describe_value" placeholder="Mieu ta thu muc">
+                        </div>   
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" id="Authorization" name="Authorization" value="Bearer {\{{session('token')}}\}" placeholder="Mieu ta thu muc">
+                        </div> 
+                        <button type="submit" id="add_folder" name="add_folder" class="btn btn-primary">Add Folder</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    {{-- <div class="row text-center">
+        <div class="col-xs-12">
+            {{ $categories->links() }}
+        </div>
+    </div> --}}
 @endsection
-@section('script')
-    
+
+@section('script')  
 @stop

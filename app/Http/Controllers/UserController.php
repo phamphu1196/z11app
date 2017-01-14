@@ -52,6 +52,7 @@ class UserController extends Controller
             $responseBody = $exception->getResponse()->getBody(true);
         }
 	}
+
     public function postLogout(Request $request)
     {
         $request->session()->forget('token');
@@ -120,6 +121,10 @@ class UserController extends Controller
     public function postLanguage(Request $request)
     {
         $language = $request->all();
+        // dd($language);
+        if ($request->session()->has('language') {
+            $request->session()->forget('language');
+        }
         $request->session()->put('language', $language);
         return redirect('/');
     }

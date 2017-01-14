@@ -73,8 +73,8 @@
                 /* Act on the event */
                 event.preventDefault();
                 var language = $(this).val();
-                var url = '/z11app/public/language';
-                $.post(url, {language: language}, function(data, textStatus, xhr) {
+                var url_ = '/z11app/public/language';
+                $.post(url_, {language: language}, function(data, textStatus, xhr) {
                     
                 });
             });
