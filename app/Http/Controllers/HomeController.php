@@ -27,19 +27,15 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         try {
-            $headers = array('Authorization' =>'Bearer {'.$request->session()->get('token').'}');
-            $client = new GuzzleHttpClient(['headers'=> $headers]);
+            $client = new GuzzleHttpClient();
             $categories = $client->request('GET', 'http://kien.godfath.com/api/v1/categories/all/0'); 
-            // dd($categories);
  
             $content = json_decode($categories->getBody()->getContents(), true);
             $categories= $content['metadata'];
-            $languages = $client->request('GET', 'http://kien.godfath.com/api/v1/language');
-            $contents = json_decode($languages->getBody()->getContents(), true);
-            $languages = $contents['listlanguage'];
-            return view('frontend.index')->with('categories', $categories)->with('languages',$languages);
+
+            return view('frontend.index')->with('categories', $categories);
         } catch (RequestException $re) {
-            echo "Could not connect!!! ";
+            echo "Error!";
         }
         
     }

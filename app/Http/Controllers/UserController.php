@@ -21,6 +21,7 @@ class UserController extends Controller
         }
 		return view('frontend.login');
 	}
+
 	public function postLogin(Request $request)
 	{
 		try {
@@ -104,10 +105,12 @@ class UserController extends Controller
             'allow_redirects' => false,
             'timeout'         => 5
         ]);
+        $result = json_decode($result->getBody(), true);
+        $status = $result['status'];
         $request->session()->forget('name');
         $request->session()->put('name', $request->name);
 
-        return redirect('/edituser');
+        return redirect('/edituser')->with('status', $status);
     }
 
     public function getTimeline(Request $request)
@@ -122,11 +125,19 @@ class UserController extends Controller
     public function postLanguage(Request $request)
     {
         $language = $request->all();
+<<<<<<< HEAD
         dd($language->language);
         if ($request->session()->has('language')){
             $request->session()->forget('language');
         }
         $request->session()->put('language', $language->language);
+=======
+        // dd($language);
+        if ($request->session()->has('language')) {
+            $request->session()->forget('language');
+        }
+        $request->session()->put('language', $language);
+>>>>>>> 81b9f4759235fe49d0579fbc28a1d799bb7d2325
     }
 
     public function getPurchases()

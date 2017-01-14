@@ -59,6 +59,10 @@
 
                                 <!-- User information -->
                                 <div class="col-xs-8">
+                                    @if (session('status'))
+                                        <div class="alert alert-success">{{ session('status') }}</div>
+                                    @endif
+
                                     <div class="form-group">
                                         <label>Tên</label>
                                         <input class="form-control" name="name" id="name" value="{{ session('name') }}" />

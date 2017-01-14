@@ -36,11 +36,7 @@ class FolderController extends Controller
                 }
             }
           	$folder = $folders[$j-1];
-            // var_dump($folder);
-            // dd($folder);
             $packages = $folder['packages'];
-            // dd($packages);
-            // dd($folders);
           	return view('frontend.folder')->with('category', $category)->with('folder', $folder)->with('packages',$packages); 
       } catch (RequestException $re) {
           echo "con dada";
