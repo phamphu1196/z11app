@@ -89,7 +89,14 @@
 
 @section('sidebar-total-top')
     @include('includes.sidebar-top')
-
+    <?php
+      if(session('language')){
+        $session = session('language');
+      }
+      else{
+        $session = 0;
+      }
+    ?>
     <li class="nav-head"><i class="fa fa-bars fa-fw" disabled></i>Chuyên mục</li>
     <?php $i = 1; ?>
     @foreach($categories as $category)
@@ -99,7 +106,7 @@
             <div id="{{$href}}" class="panel-collapse collapse">
                 <ul class="nav nav-stacked">
                 @foreach ($category['folder'] as $folder)
-                    <li><a href="{{ url($category['category_code'].'/'.$folder['translate_name_text'][0]['text_value']) }}">{{ $folder['translate_name_text'][0]['text_value'] }}</a></li>
+                    <li><a href="{{ url($category['category_code'].'/'.$folder['translate_name_text'][$session]['text_value']) }}">{{ $folder['translate_name_text'][$session]['text_value'] }}</a></li>
                 @endforeach
                 </ul>
             </div>
@@ -124,11 +131,11 @@
 
     @foreach($categories as $category)
         @foreach($category['folder'] as $folder)
-        <a href="{{ url($category['category_code'].'/'.$folder['translate_name_text'][0]['text_value']) }}">
+        <a href="{{ url($category['category_code'].'/'.$folder['translate_name_text'][$session]['text_value']) }}">
             <div class="col-md-3 text-center">
                 <div class="panel panel-warning panel-pricing">
                 <img src="{{ asset('image/gx2.jpg') }}" style="width: 100%;" alt="">
-                <h3>{{$folder['translate_name_text'][0]['text_value']}}</h3>
+                <h3>{{$folder['translate_name_text'][$session]['text_value']}}</h3>
                 </div>
             </div>
         </a>

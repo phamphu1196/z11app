@@ -90,10 +90,18 @@
 @endsection
 @section('sidebar-total-top')
   @include('includes.sidebar-top')
-  <li class="nav-head"><a href="{{ url($category['category_code'].'/'.$folder['translate_name_text'][0]['text_value']) }}">Chuyen muc: {{ $folder['translate_name_text'][0]['text_value'] }}</a></li>
-                {{-- {{ $folders = $category['folder'] }} --}}
+  <?php 
+  if(session('language')){
+    $session = session('language'); 
+  }
+  else{
+    $session = 0;
+  }
+  ?>
+  <li class="nav-head"><a href="{{ url($category['category_code'].'/'.$folder['translate_name_text'][$session]['text_value']) }}">Chuyen muc: {{ $folder['translate_name_text'][$session]['text_value'] }}</a></li> 
+
                 @foreach($packages as $package)
-                    <li><a href="{{ url($category['category_code'].'/'.$folder['translate_name_text'][0]['text_value'].'/'.$package['translate_name_text'][0]['text_value']) }}">{{ $package['translate_name_text'][0]['text_value'] }}</a></li>
+                    <li><a href="{{ url($category['category_code'].'/'.$folder['translate_name_text'][$session]['text_value'].'/'.$package['translate_name_text'][$session]['text_value']) }}">{{ $package['translate_name_text'][$session]['text_value'] }}</a></li>
                 @endforeach
 @endsection
 
@@ -102,7 +110,7 @@
     <div class="links">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{{ url($category['category_code'].'/'.$folder['translate_name_text'][0]['text_value']) }}">{{ $folder['translate_name_text'][0]['text_value'] }}</a></li>
+        <li class="breadcrumb-item"><a href="{{ url($category['category_code'].'/'.$folder['translate_name_text'][$session]['text_value']) }}">{{ $folder['translate_name_text'][$session]['text_value'] }}</a></li>
       </ol>
     </div>
       <div class="button-add">
@@ -110,11 +118,11 @@
      </div>
      <div class="clearnfix"></div>
         @foreach($packages as $package)
-        <a href="{{ url($category['category_code'].'/'.$folder['translate_name_text'][0]['text_value'].'/'.$package['translate_name_text'][0]['text_value']) }}">
+        <a href="{{ url($category['category_code'].'/'.$folder['translate_name_text'][$session]['text_value'].'/'.$package['translate_name_text'][$session]['text_value']) }}">
             <div class="col-md-3 text-center">
                 <div class="panel panel-warning panel-pricing">
                         <img src="{{ asset('image/gx3.jpg') }}" style="width: 100%;" alt="">
-                        <h3>{{$package['translate_name_text'][0]['text_value']}}</h3>
+                        <h3>{{$package['translate_name_text'][$session]['text_value']}}</h3>
                     <div class="panel-body text-center">
                       
                     </div>

@@ -40,7 +40,7 @@ Route::post('register', 'UserController@postRegister');
 Route::get('/timeline', 'UserController@showDocument');
 Route::get('edituser', 'UserController@editUser');;
 Route::get('purchases', 'UserController@getPurchases');
-Route::post('language', 'UserController@posstLanguage');
+Route::post('language', 'UserController@postLanguage');
 
 Route::get('/',['as'=>'home', 'uses'=> 'HomeController@index']);
 
