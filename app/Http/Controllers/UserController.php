@@ -36,6 +36,7 @@ class UserController extends Controller
             $json = json_decode($res->getBody(),true);
             // dd($json);
             if ($json['code'] ==200) {
+                $request->session()->put('languages','1');
                 $request->session()->put('token', $json['metadata']['token']);
                 $request->session()->put('id', $json['metadata']['user']['id']);
                 $request->session()->put('type', $json['metadata']['user']['grant_type']);
@@ -121,12 +122,11 @@ class UserController extends Controller
     public function postLanguage(Request $request)
     {
         $language = $request->all();
-        // dd($language);
-        if ($request->session()->has('language') {
+        dd($language->language);
+        if ($request->session()->has('language')){
             $request->session()->forget('language');
         }
-        $request->session()->put('language', $language);
-        return redirect('/');
+        $request->session()->put('language', $language->language);
     }
 
     public function getPurchases()

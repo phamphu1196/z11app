@@ -15,8 +15,14 @@
 				@if(Session::has('token'))
 					<li class="lgg">
 						<select name="language" id="language" class="form-control" required="required">
+							<?php
+								$count =0;
+							?>
 							@foreach($languages as $language)
-								<option value="{{$language['language_code']}}">{{ $language['description'] }}</option>
+								<option value="{{ $count }}">{{ $language['description'] }}</option>
+								<?php
+									$count++;
+								?>
 							@endforeach
 						</select>
 					</li>

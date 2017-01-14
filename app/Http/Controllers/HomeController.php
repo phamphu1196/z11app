@@ -39,7 +39,7 @@ class HomeController extends Controller
             $languages = $contents['listlanguage'];
             return view('frontend.index')->with('categories', $categories)->with('languages',$languages);
         } catch (RequestException $re) {
-            echo "con duy";
+            echo "Could not connect!!! ";
         }
         
     }
