@@ -125,19 +125,11 @@ class UserController extends Controller
     public function postLanguage(Request $request)
     {
         $language = $request->all();
-<<<<<<< HEAD
         dd($language->language);
         if ($request->session()->has('language')){
             $request->session()->forget('language');
         }
         $request->session()->put('language', $language->language);
-=======
-        // dd($language);
-        if ($request->session()->has('language')) {
-            $request->session()->forget('language');
-        }
-        $request->session()->put('language', $language);
->>>>>>> 81b9f4759235fe49d0579fbc28a1d799bb7d2325
     }
 
     public function getPurchases()

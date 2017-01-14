@@ -20,6 +20,7 @@ class AdminController extends Controller
 		// dd($categories);
 		return view('admin.dashboard')->with('categories', $categories);
 	}
+
     public function getMember()
     {
     	$client = new GuzzleHttpClient();

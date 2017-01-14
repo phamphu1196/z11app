@@ -4,7 +4,7 @@
           <div class="row">
           @foreach($categories as $category)
             <div class="col-lg-6 col-md-6 cate">
-            <input type="hidden" class="category_id" value="{{$category['category_id']}}">
+            <input type="hidden" class="category_id" value="{{ $category['category_id'] }}">
             <div class="panel panel-green">
                 <div class="panel-heading">
                     <div class="row">
@@ -12,7 +12,7 @@
                             <i class="fa fa-comments fa-5x"></i>
                         </div>
                         <div class="col-xs-9 text-right">
-                            <div class="huge">26</div>
+                            <div class="huge">{{ count($category['folder']) }}</div>
                             <div>{{ $category['translate_name_text'][0]['text_value'] }}</div>
                         </div>
                     </div>
