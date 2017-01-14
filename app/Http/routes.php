@@ -40,6 +40,7 @@ Route::post('register', 'UserController@postRegister');
 Route::get('/timeline', 'UserController@showDocument');
 Route::get('edituser', 'UserController@editUser');;
 Route::get('purchases', 'UserController@getPurchases');
+Route::post('language', 'UserController@postLanguage');
 
 Route::get('/',['as'=>'home', 'uses'=> 'HomeController@index']);
 
@@ -52,7 +53,6 @@ Route::get('/{category_code}/{translate_name_text_folder}/{translate_name_text_p
 
 
 
-Route::post('language', 'UserController@postLanguage');
 
 //-------------------------------------------------------------
 
@@ -68,7 +68,7 @@ Route::group(['middleware' => 'users'], function() {
     Route::get('logout', 'UserController@postLogout');
     Route::get('create', 'CategoryController@createQuestion');
 
-    Route::post('addfolder', 'FolderControlle@postAddFolder');
+    Route::post('addfolder', 'FolderController@postAddFolder');
 
     // Route::post('edituser', 'UserController@postEditUser');
 });
