@@ -10,74 +10,56 @@ use GuzzleHttp\Client as GuzzleHttpClient;
 use GuzzleHttp\Exception\RequestException;
 class FolderController extends Controller
 {
-    public function getFolder(Request $request,$category_code, $translate_name_text)
+    public function getFolder(Request $request, $category_code, $folder_id, $translate_name_text)
     {
-    	try {
-            $tmp = explode('_', $translate_name_text);
-            $client = new GuzzleHttpClient();
-            $categories = $client->request('GET', 'http://kien.godfath.com/api/v1/folder/20'); 
- 
+
+    	try {           
+            $headers = array('Authorization' =>'Bearer {'.$request->session()->get('token').'}');
+            $client = new GuzzleHttpClient(['headers'=> $headers]);
+
+            // Get categories
+            $categories = $client->request('GET', 'http://kien.godfath.com/api/v1/categories/all/0'); 
             $content = json_decode($categories->getBody()->getContents(), true);
             $categories= $content['metadata'];
 
+            // Get folders
+            $folder = $client->request('GET', 'http://kien.godfath.com/api/v1/folder/'.$folder_id);
+            $contents = json_decode($folder->getBody()->getContents(), true);
+            $folder = $contents['metadata'];
+            // dd($folder);
 
-            dd($category_code);
-
-            foreach ($categories as $value) { 
-                // dd($value['translate_name_text'][$request->session()->get('language')]['text_value']);
-                if ($value['translate_name_text'][$request->session()->get('language')]['text_value'] == $category_code) {
-                    break;
-                } 
-                 $i++;        
-            }
-            $category = $categories[$i];
-            $folders = $categories[$i]['folder'];
-            foreach ($folders as $value) {
-                // dd($value['translate_name_text'][$request->session()->get('language')]['text_value']);
-                if ($value['translate_name_text'][$request->session()->get('language')]['text_value'] == $translate_name_text) {
-                    break;
-                }
-                $j++;
-            }
-            dd($folders[$j]);
-          	$folder = $folders[$j];
-            $packages = $folder['packages'];
-            // $folders = $client->request('GET', 'http://kien.godfath.com/api/v1/folders/all/0'); 
- 
-            // $contents = json_decode($folders->getBody()->getContents(), true);
-            // $folders = $contents['metadata'];
-            // dd($request->session()->get('language'));
-          	return view('frontend.folder')->with('category', $category)->with('folder', $folder)->with('packages',$packages); 
-      } catch (RequestException $re) {
-          echo "con dada";
-      }
-        
+            return view('frontend.folder')->with('categories', $categories)->with('folder', $folder);
+        } catch (RequestException $re) {
+            echo "Error!";
+        }     
     }
 
     public function postAddFolder(Request $request)
     {
     	try {
             $data = $request->all();
-            
-            $headers = array([
-                'Authorization'=> 'Bearer {'.$request->session()->get('token').'}'
-            ]);
-            $client = new GuzzleHttpClient(['headers' => $headers]);
-            // dd($token);
-            $json_text_value = '{"'.$request->session()->get('language').'":"'.$data['text_value'].'"}';
-            $json = '';
-            $res = $client->request('POST', 'http://kien.godfath.com/api/v1/folders', [
+
+            $text_value_vi = $data['text_value'];
+            $text_value_en = $data['text_value']."_en";
+            $text_value = '{"vi":"'.$text_value_vi.'","en":"'.$text_value_en.'"}';
+
+            $describe_value_vi = $data['describe_value'];
+            $describe_value_en = $data['describe_value']."_en";
+            $describe_value = '{"vi":"'.$describe_value_vi.'","en":"'.$describe_value_en.'"}';
+
+            $token = 'Bearer {'.$request->session()->get('token').'}';
+            $client = new GuzzleHttpClient();
+            $result = $client->post('http://kien.godfath.com/api/v1/folders', [
+                'headers' => ['Authorization' => $token],
                 'form_params' => [
                     'category_id' => $data['category_id'],
-                    'text_value' => $data['text_value'],
-                    'describe_value' => $data['describe_value']
+                    'text_value' => $text_value,
+                    'describe_value' => $describe_value
                 ]
             ]);
-            dd($res);
-            $json = json_decode($res->getBody(),true);
-            dd($json);
-            
-            return redirect('/');       
+            $result = json_decode($result->getBody(), true);
+            return redirect('/');
+
         } catch (ClientErrorResponseException $exception) {
             $responseBody = $exception->getResponse()->getBody(true);
         }
