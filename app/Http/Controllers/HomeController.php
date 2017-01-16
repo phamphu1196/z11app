@@ -32,8 +32,11 @@ class HomeController extends Controller
  
             $content = json_decode($categories->getBody()->getContents(), true);
             $categories= $content['metadata'];
-
-            return view('frontend.index')->with('categories', $categories);
+            $folders = $client->request('GET', 'http://kien.godfath.com/api/v1/folders/all/0'); 
+ 
+            $contents = json_decode($folders->getBody()->getContents(), true);
+            $folders = $contents['metadata'];
+            return view('frontend.index')->with('categories', $categories)->with('folders',$folders);
         } catch (RequestException $re) {
             echo "Error!";
         }
