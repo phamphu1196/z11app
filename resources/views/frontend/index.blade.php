@@ -105,8 +105,10 @@
             <a data-toggle="collapse" data-parent="#accordion" href="#{{$href}}"><i class="fa fa-list-alt fa-fw"></i>{{ $category['category_code'] }}</a>
             <div id="{{$href}}" class="panel-collapse collapse">
                 <ul class="nav nav-stacked">
-                @foreach ($category['folder'] as $folder)
+                @foreach ($folders as $folder)
+                  @if ($folder['category']['category_id'] == $category['category_id'])
                     <li><a href="{{ url($category['category_code'].'/'.$folder['translate_name_text'][$session]['text_value']) }}">{{ $folder['translate_name_text'][$session]['text_value'] }}</a></li>
+                  @endif
                 @endforeach
                 </ul>
             </div>
@@ -130,15 +132,18 @@
     <hr>
 
     @foreach($categories as $category)
-        @foreach($category['folder'] as $folder)
-        <a href="{{ url($category['category_code'].'/'.$folder['translate_name_text'][$session]['text_value']) }}">
+        @foreach($folders as $folder)
+        @if ($folder['category']['category_id'] == $category['category_id'])
+          <a href="{{ url($category['category_code'].'/'.$folder['translate_name_text'][$session]['text_value']) }}">
             <div class="col-md-3 text-center">
                 <div class="panel panel-warning panel-pricing">
                 <img src="{{ asset('image/gx2.jpg') }}" style="width: 100%;" alt="">
                 <h3>{{$folder['translate_name_text'][$session]['text_value']}}</h3>
                 </div>
             </div>
-        </a>
+          </a>
+        @endif
+        
         @endforeach
     @endforeach
 @endsection
