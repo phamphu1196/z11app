@@ -94,7 +94,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					@foreach($users as $user)
+					@foreach($members as $user)
 					<tr class="member">
 						<td class="user_id_culum">{{$user['id']}}</td>
 						<td class="user_name_culum">{{ $user['profile']['name'] }}</td>
@@ -300,7 +300,7 @@
     			var user_id = $(this).parents('.member').children('.user_id_culum').text();
     			var url_ = '/z11app/public/admin/users/'+user_id;
     			$.get(url_, function(data) {
-    				alert(1);
+    				
 	    			// $('#catego_id').val(data['category_id']);
 	    			// $('#category_code').val(data['category_code']);
 	    			// $('#image').val(data['image']);

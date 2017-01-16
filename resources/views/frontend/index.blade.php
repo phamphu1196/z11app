@@ -107,7 +107,7 @@
                 <ul class="nav nav-stacked">
                 @foreach ($folders as $folder)
                   @if ($folder['category']['category_id'] == $category['category_id'])
-                    <li><a href="{{ url($category['category_code'].'/'.$folder['translate_name_text'][$session]['text_value']) }}">{{ $folder['translate_name_text'][$session]['text_value'] }}</a></li>
+                    <li><a href="{{ url($category['translate_name_text'][$session]['text_value'].'_'.$category['category_id'].'/'.$folder['translate_name_text'][$session]['text_value'].'_'.$folder['folder_id']) }}">{{ $folder['translate_name_text'][$session]['text_value'] }}</a></li>
                   @endif
                 @endforeach
                 </ul>
@@ -131,21 +131,16 @@
     <div class="clearnfix"></div>
     <hr>
 
-    @foreach($categories as $category)
-        @foreach($folders as $folder)
-        @if ($folder['category']['category_id'] == $category['category_id'])
-          <a href="{{ url($category['category_code'].'/'.$folder['translate_name_text'][$session]['text_value']) }}">
-            <div class="col-md-3 text-center">
-                <div class="panel panel-warning panel-pricing">
-                <img src="{{ asset('image/gx2.jpg') }}" style="width: 100%;" alt="">
-                <h3>{{$folder['translate_name_text'][$session]['text_value']}}</h3>
-                </div>
-            </div>
-          </a>
-        @endif
-        
-        @endforeach
-    @endforeach
+      @foreach($folders as $folder)
+        <a href="{{ url($folder['category']['translate_name_text'][$session]['text_value'].'_'.$folder['category']['category_id'].'/'.$folder['translate_name_text'][$session]['text_value'].'_'.$folder['folder_id']) }}">
+          <div class="col-md-3 text-center">
+              <div class="panel panel-warning panel-pricing">
+              <img src="{{ asset('image/gx2.jpg') }}" style="width: 100%;" alt="">
+              <h3>{{$folder['translate_name_text'][$session]['text_value']}}</h3>
+              </div>
+          </div>
+        </a>
+      @endforeach
 @endsection
 
 @section('end-sidebar-total-top')

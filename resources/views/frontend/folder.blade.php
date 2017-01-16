@@ -1,4 +1,4 @@
-@extends('layouts.app')
+{{-- @extends('layouts.app')
 @section('title')
   {{ $category['category_code'] }}
 @endsection
@@ -89,8 +89,7 @@
   @include('includes.navbar')
 @endsection
 @section('sidebar-total-top')
-  @include('includes.sidebar-top')
-  <?php 
+<?php 
   if(session('language')){
     $session = session('language'); 
   }
@@ -98,6 +97,23 @@
     $session = 0;
   }
   ?>
+  @include('includes.sidebar-top')
+  <li class="nav-head"><i class="fa fa-bars fa-fw" disabled></i>Chuyên mục</li>
+    <?php $i = 1; ?>
+    @foreach($categories as $category)
+        <?php $href = "collapse".$i++; ?>
+        <li class="nav-items">
+            <a data-toggle="collapse" data-parent="#accordion" href="#{{$href}}"><i class="fa fa-list-alt fa-fw"></i>{{ $category['category_code'] }}</a>
+            <div id="{{$href}}" class="panel-collapse collapse">
+                <ul class="nav nav-stacked">
+                @foreach ($folders as $folder)
+                  @if ($folder['category']['category_id'] == $category['category_id'])
+                    <li><a href="{{ url($category['category_code'].'/'.$folder['translate_name_text'][$session]['text_value']) }}">{{ $folder['translate_name_text'][$session]['text_value'] }}</a></li>
+                  @endif
+                @endforeach
+                </ul>
+            </div>
+        </li>
   <li class="nav-head"><a href="{{ url($category['category_code'].'/'.$folder['translate_name_text'][$session]['text_value']) }}">Chuyen muc: {{ $folder['translate_name_text'][$session]['text_value'] }}</a></li> 
 
                 @foreach($packages as $package)
@@ -167,4 +183,4 @@
 
 @section('script')
 
-@stop
+@stop --}}

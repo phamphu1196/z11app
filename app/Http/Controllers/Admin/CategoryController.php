@@ -22,13 +22,30 @@ class CategoryController extends Controller
       return $category;
     }
 
-    public function getAllCategory()
+    public function getAllCategory(Request $request)
     {
-    	$client = new GuzzleHttpClient();
+    	  $headers = array('Authorization' =>'Bearer {'.$request->session()->get('token').'}');
+        $client = new GuzzleHttpClient(['headers'=> $headers]);
         $categories = $client->request('GET', 'http://kien.godfath.com/api/v1/categories/all/0'); 
 
         $content = json_decode($categories->getBody()->getContents(), true);
         $categories= $content['metadata'];
-        return view('admin.manager-category')->with('categories', $categories);
+
+        $members = $client->request('GET', 'http://kien.godfath.com/api/v1/users/all/0'); 
+
+        $content = json_decode($members->getBody()->getContents(), true);
+        $members = $content['metadata'];
+
+        return view('admin.manager-category')->with('categories', $categories)->with('members',$members);
+    }
+
+    public function putEditCategory()
+    {
+      
+    }
+
+    public function deleteCategory()
+    {
+      # code...
     }
 }

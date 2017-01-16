@@ -37,7 +37,7 @@ class UserController extends Controller
             $json = json_decode($res->getBody(),true);
             // dd($json);
             if ($json['code'] ==200) {
-                $request->session()->put('languages','1');
+                $request->session()->put('language','1');
                 $request->session()->put('token', $json['metadata']['token']);
                 $request->session()->put('id', $json['metadata']['user']['id']);
                 $request->session()->put('type', $json['metadata']['user']['grant_type']);

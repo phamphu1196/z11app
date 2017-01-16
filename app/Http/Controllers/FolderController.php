@@ -13,30 +13,39 @@ class FolderController extends Controller
     public function getFolder(Request $request,$category_code, $translate_name_text)
     {
     	try {
+            $tmp = explode('_', $translate_name_text);
             $client = new GuzzleHttpClient();
-            $categories = $client->request('GET', 'http://kien.godfath.com/api/v1/categories/all/0'); 
+            $categories = $client->request('GET', 'http://kien.godfath.com/api/v1/folder/20'); 
  
             $content = json_decode($categories->getBody()->getContents(), true);
             $categories= $content['metadata'];
-            $i = 0;
-            $j = 0;
-            foreach ($categories as $value) {
-                $i++;
-                if ($value['category_code'] == $category_code) {
+
+
+            dd($category_code);
+
+            foreach ($categories as $value) { 
+                // dd($value['translate_name_text'][$request->session()->get('language')]['text_value']);
+                if ($value['translate_name_text'][$request->session()->get('language')]['text_value'] == $category_code) {
                     break;
-                }
-                
+                } 
+                 $i++;        
             }
-            $category = $categories[$i-1];
-            $folders = $categories[$i-1]['folder'];
+            $category = $categories[$i];
+            $folders = $categories[$i]['folder'];
             foreach ($folders as $value) {
-              $j++;
-                if ($value['translate_name_text'][0]['text_value'] == $translate_name_text) {
+                // dd($value['translate_name_text'][$request->session()->get('language')]['text_value']);
+                if ($value['translate_name_text'][$request->session()->get('language')]['text_value'] == $translate_name_text) {
                     break;
                 }
+                $j++;
             }
-          	$folder = $folders[$j-1];
+            dd($folders[$j]);
+          	$folder = $folders[$j];
             $packages = $folder['packages'];
+            // $folders = $client->request('GET', 'http://kien.godfath.com/api/v1/folders/all/0'); 
+ 
+            // $contents = json_decode($folders->getBody()->getContents(), true);
+            // $folders = $contents['metadata'];
             // dd($request->session()->get('language'));
           	return view('frontend.folder')->with('category', $category)->with('folder', $folder)->with('packages',$packages); 
       } catch (RequestException $re) {

@@ -40,17 +40,12 @@
                       	</div>
                 	</div>
                 	<div class="panel-body">
-
-                      <form class="form form-vertical">
+                      <form class="form form-vertical" action="" method="POST" role="form" >
                        
                         <div class="control-group">
-                          <label>Category:</label>
+                          <label>Category Code:</label>
                           <div class="controls">
-                           <select name="category_code" id="category_code" class="form-control" required="required">
-                            @foreach($categories as $category)
-                             <option value="">{{ $category['translate_name_text'][0]['text_value'] }}</option>
-                             @endforeach
-                           </select>
+                              <input type="text" name="category_code" id="category_code" class="form-control" value="" required="required" pattern="" title="">
                           </div>
                         </div>      
                         
@@ -62,7 +57,7 @@
                         </div> 
                              
                         <div class="control-group">
-                          <label>Name Folder:</label>
+                          <label>Name Category:</label>
                           <div class="controls">
                              <input type="text" name="text_value" id="text_value" class="form-control" value="" required="required" pattern="" title="">
                           </div>
