@@ -107,10 +107,13 @@
             <a data-toggle="collapse" data-parent="#accordion" href="#{{$href}}"><i class="fa fa-list-alt fa-fw"></i>{{ $category['category_code'] }}</a>
             <div id="{{$href}}" class="panel-collapse collapse">
                 <ul class="nav nav-stacked">
-                @foreach ($folders as $folder)
-                  @if ($folder['category']['category_id'] == $category['category_id'])
-                    <li><a href="{{ url($category['category_code'].'/'.$folder['translate_name_text'][$session]['text_value']) }}">{{ $folder['translate_name_text'][$session]['text_value'] }}</a></li>
-                  @endif
+                @foreach ($category['folder'] as $folder)
+                    <?php
+                        $folder_id = $folder['folder_id'];
+                        $category_code = changeTitle($category['category_code']);
+                        $text_value = changeTitle($folder['translate_name_text'][$session]['text_value']);
+                    ?>
+                    <li><a href="{{ url($category_code.'/'.$folder_id.'/'.$text_value) }}">{{ $folder['translate_name_text'][$session]['text_value'] }}</a></li>
                 @endforeach
                 </ul>
             </div>
@@ -133,20 +136,20 @@
     <div class="clearnfix"></div>
     <hr>
 
-    @foreach($categories as $category)
-        @foreach($folders as $folder)
-        @if ($folder['category']['category_id'] == $category['category_id'])
-          <a href="{{ url($category['category_code'].'/'.$folder['translate_name_text'][$session]['text_value']) }}">
+    @foreach($folders as $folder)
+        <?php 
+            $folder_id = $folder['folder_id'];
+            $category_code = changeTitle($folder['category']['category_code']);
+            $translate_name_text = changeTitle($folder['translate_name_text'][$session]['text_value']);
+        ?>
+        <a href="{{ url('/'.$category_code.'/'.$folder_id.'/'.$translate_name_text) }}">
             <div class="col-md-3 text-center">
                 <div class="panel panel-warning panel-pricing">
                 <img src="{{ asset('image/gx2.jpg') }}" style="width: 100%;" alt="">
                 <h3>{{$folder['translate_name_text'][$session]['text_value']}}</h3>
                 </div>
             </div>
-          </a>
-        @endif
-        
-        @endforeach
+        </a>
     @endforeach
 @endsection
 

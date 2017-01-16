@@ -1,7 +1,9 @@
 @extends('layouts.app')
+
 @section('title')
-  {{ $category['category_code'] }}
+
 @endsection
+
 @section('style')
     <link rel="stylesheet" href="{{ asset('/css/sidebar-category.css') }}">
     <style type="text/css">
@@ -28,97 +30,99 @@
             margin-top: 30px;
         }
         .panel-pricing {
-          -moz-transition: all .3s ease;
-          -o-transition: all .3s ease;
-          -webkit-transition: all .3s ease;
+            -moz-transition: all .3s ease;
+            -o-transition: all .3s ease;
+            -webkit-transition: all .3s ease;
         }
         .panel-pricing:hover {
-          box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.2);
+            box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.2);
         }
         .panel-pricing .panel-heading {
-          padding: 20px 10px;
+            padding: 20px 10px;
         }
         .panel-pricing .panel-heading .fa {
-          margin-top: 10px;
-          font-size: 58px;
+            margin-top: 10px;
+            font-size: 58px;
         }
         .panel-pricing .list-group-item {
-          color: #777777;
-          border-bottom: 1px solid rgba(250, 250, 250, 0.5);
+            color: #777777;
+            border-bottom: 1px solid rgba(250, 250, 250, 0.5);
         }
         .panel-pricing .list-group-item:last-child {
-          border-bottom-right-radius: 0px;
-          border-bottom-left-radius: 0px;
+            border-bottom-right-radius: 0px;
+            border-bottom-left-radius: 0px;
         }
         .panel-pricing .list-group-item:first-child {
-          border-top-right-radius: 0px;
-          border-top-left-radius: 0px;
+            border-top-right-radius: 0px;
+            border-top-left-radius: 0px;
         }
         .panel-pricing .panel-body {
-          background-color: #f0f0f0;
-          font-size: 20px;
-          color: #777777;
-          padding: 20px;
-          margin: 0px;
+            background-color: #f0f0f0;
+            font-size: 20px;
+            color: #777777;
+            padding: 20px;
+            margin: 0px;
         }
         .dropdown-menu:hover {
             box-shadow: 4px 4px 4px #888888;
             background-color: #B1EEE3;
         }
         .clearnfix {
-          clear: both;
+            clear: both;
         }
         .button-add button {
-          float: right;
-          width: 10%;
+            float: right;
+            width: 10%;
         }
         .modal-body {
-          width: 80%;
-          margin-left: 50px;
+            width: 80%;
+            margin-left: 50px;
         }
-        /*.button-add button {
-          margin-top: 10px;
-        }*/
         .links {
-          float: left;
-          width: 90%;
+            float: left;
+            width: 90%;
         }
     </style>
 @endsection
-@section('navbar')
-  @include('includes.navbar')
-@endsection
-@section('sidebar-total-top')
-  @include('includes.sidebar-top')
-  <?php 
-  if(session('language')){
-    $session = session('language'); 
-  }
-  else{
-    $session = 0;
-  }
-  ?>
-  <li class="nav-head"><a href="{{ url($category['category_code'].'/'.$folder['translate_name_text'][$session]['text_value']) }}">Chuyen muc: {{ $folder['translate_name_text'][$session]['text_value'] }}</a></li> 
 
-                @foreach($packages as $package)
-                    <li><a href="{{ url($category['category_code'].'/'.$folder['translate_name_text'][$session]['text_value'].'/'.$package['translate_name_text'][$session]['text_value']) }}">{{ $package['translate_name_text'][$session]['text_value'] }}</a></li>
-                @endforeach
+@section('navbar')
+    @include('includes.navbar')
+@endsection
+
+@section('sidebar-total-top')
+    @include('includes.sidebar-top')
+
+    <?php 
+        if(session('language')){
+            $session = session('language'); 
+        }
+        else{
+            $session = 0;
+        }
+    ?>
+    <li class="nav-head"><a href="{{ url('/') }}">Chuyen muc:</a></li> 
+
+    @foreach($folders['package'] as $package)
+        <li><a href="{{ url('/') }}">{{ $package['translate_name_text'][$session]['text_value'] }}</a></li>
+    @endforeach
 @endsection
 
 @section('content-sidebar-total-top')
-  @include('includes.sidebar-middle')
+    @include('includes.sidebar-middle')
+
     <div class="links">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{{ url($category['category_code'].'/'.$folder['translate_name_text'][$session]['text_value']) }}">{{ $folder['translate_name_text'][$session]['text_value'] }}</a></li>
-      </ol>
+        <ol class="breadcrumb">
+           {{--  <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{{ url($category['category_code'].'/'.$folder['translate_name_text'][$session]['text_value']) }}">{{ $folder['translate_name_text'][$session]['text_value'] }}</a></li> --}}
+        </ol>
     </div>
-      <div class="button-add">
+    <div class="button-add">
         <button type="button" class="btn btn-success" data-toggle="modal" href='#modal-id'>Add Folder</button>
-     </div>
-     <div class="clearnfix"></div>
-        @foreach($packages as $package)
-        <a href="{{ url($category['category_code'].'/'.$folder['translate_name_text'][$session]['text_value'].'/'.$package['translate_name_text'][$session]['text_value']) }}">
+    </div>
+    <div class="clearnfix"></div>
+
+    @foreach($folders['package'] as $package)
+        <a href="{{ url('/') }}">
             <div class="col-md-3 text-center">
                 <div class="panel panel-warning panel-pricing">
                         <img src="{{ asset('image/gx3.jpg') }}" style="width: 100%;" alt="">
@@ -128,41 +132,39 @@
                     </div>
                 </div>
             </div>
-        </a>
-            
-        @endforeach
-
+        </a>     
+    @endforeach
 @endsection
 
 @section('end-sidebar-total-top')
      @include('includes.sidebar-buttom')
 @endsection
 @section('content')     
-     <div class="modal fade" id="modal-id">
-       <div class="modal-dialog">
-         <div class="modal-content">
-           <div class="modal-header">
-             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-             <h4 class="modal-title">Them Thu Muc</h4>
-           </div>
-           <div class="modal-body">
-             <form action="{{ url('addfolder') }}" method="POST" role="form">
-             
-               <div class="form-group">
-                 <label for="">Ten thu muc:</label>
-                 <input type="text" class="form-control" id="name_folder" name="name_folder" placeholder="Ten thu muc">
-               </div>      
-               <button type="submit" id="add_folder" name="add_folder" class="btn btn-primary">Add Folder</button>
-             </form>
-           </div>
-         </div>
-       </div>
-     </div>
+    <div class="modal fade" id="modal-id">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Add Package</h4>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ url('addfolder') }}" method="POST" role="form">
+
+                        <div class="form-group">
+                            <label for="">Ten package:</label>
+                            <input type="text" class="form-control" id="name_folder" name="name_folder" placeholder="Ten thu muc">
+                        </div>      
+                        <button type="submit" id="add_folder" name="add_folder" class="btn btn-primary">Add</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 
 @section('sidebar-total-buttom')
-  @include('includes.sidebar-category-buttom')
+    @include('includes.sidebar-category-buttom')
 @endsection
 
 @section('script')

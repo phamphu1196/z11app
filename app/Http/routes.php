@@ -46,7 +46,7 @@ Route::get('/',['as'=>'home', 'uses'=> 'HomeController@index']);
 
 Route::get('/{category_code?}', 'CategoryController@getCategory');
 
-Route::get('/{category_code}/{translate_name_text?}', 'FolderController@getFolder');
+Route::get('/{category_code}/{folder_id}/{translate_name_text?}', 'FolderController@getFolder');
 
 Route::get('/{category_code}/{translate_name_text}/{translate_name_text_package?}', 'PackageController@getPackage');
 Route::get('/{category_code}/{translate_name_text_folder}/{translate_name_text_package}/{translate_name_text_chapter?}', 'ChapterController@getchapter');

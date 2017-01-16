@@ -13,13 +13,13 @@ class CategoryController extends Controller
 {
     public function getCategoryId(Request $request,$id)
     {
-      $headers = array('Authorization' =>'Bearer {'.$request->session()->get('token').'}');
-      $client = new GuzzleHttpClient(['headers'=> $headers]);
-      $category = $client->request('GET', 'http://kien.godfath.com/api/v1/category/'.$id); 
+        $headers = array('Authorization' =>'Bearer {'.$request->session()->get('token').'}');
+        $client = new GuzzleHttpClient(['headers'=> $headers]);
+        $category = $client->request('GET', 'http://kien.godfath.com/api/v1/category/'.$id); 
 
-      $content = json_decode($category->getBody()->getContents(), true);
-      $category = $content['metadata'];
-      return $category;
+        $content = json_decode($category->getBody()->getContents(), true);
+        $category = $content['metadata'];
+        return $category;
     }
 
     public function getAllCategory()
