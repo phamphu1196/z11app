@@ -188,7 +188,7 @@
                             <input type="text" class="form-control" id="describe_value" name="describe_value" placeholder="Mieu ta thu muc">
                         </div>   
                         <div class="form-group">
-                            <input type="hidden" class="form-control" id="Authorization" name="Authorization" value="Bearer {\{{session('token')}}\}" placeholder="Mieu ta thu muc">
+                            <input type="hidden" class="form-control" id="Authorization" name="Authorization" value="Bearer {\{{session('token')}}\}">
                         </div> 
                         <button type="submit" id="add_folder" name="add_folder" class="btn btn-primary">Add Folder</button>
                     </form>

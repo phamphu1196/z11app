@@ -100,9 +100,9 @@
             $session = 0;
         }
     ?>
-    <li class="nav-head"><a href="{{ url('/') }}">Chuyen muc:</a></li> 
+    <li class="nav-head"><a href="{{ url('/') }}">Chuyên mục:</a></li> 
 
-    @foreach($folders['package'] as $package)
+    @foreach($folder['package'] as $package)
         <li><a href="{{ url('/') }}">{{ $package['translate_name_text'][$session]['text_value'] }}</a></li>
     @endforeach
 @endsection
@@ -112,24 +112,25 @@
 
     <div class="links">
         <ol class="breadcrumb">
-           {{--  <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
-            <li class="breadcrumb-item"><a href="{{ url($category['category_code'].'/'.$folder['translate_name_text'][$session]['text_value']) }}">{{ $folder['translate_name_text'][$session]['text_value'] }}</a></li> --}}
+            <?php
+                $category = $folder['category'];
+            ?>
+            <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">{{ $folder['translate_name_text'][$session]['text_value'] }}</a></li>
         </ol>
     </div>
     <div class="button-add">
-        <button type="button" class="btn btn-success" data-toggle="modal" href='#modal-id'>Add Folder</button>
+        <button type="button" class="btn btn-success" data-toggle="modal" href='#modal-id'>Add</button>
     </div>
     <div class="clearnfix"></div>
 
-    @foreach($folders['package'] as $package)
+    @foreach($folder['package'] as $package)
         <a href="{{ url('/') }}">
             <div class="col-md-3 text-center">
                 <div class="panel panel-warning panel-pricing">
-                        <img src="{{ asset('image/gx3.jpg') }}" style="width: 100%;" alt="">
-                        <h3>{{$package['translate_name_text'][$session]['text_value']}}</h3>
-                    <div class="panel-body text-center">
-                      
-                    </div>
+                    <img src="{{ asset('image/gx3.jpg') }}" style="width: 100%;" alt="">
+                    <h3>{{ $package['translate_name_text'][$session]['text_value'] }}</h3>
+                    <h4 style="color: green">Cost: {{ $package['package_cost'] }}</h4>
                 </div>
             </div>
         </a>     
@@ -148,13 +149,23 @@
                     <h4 class="modal-title">Add Package</h4>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ url('addfolder') }}" method="POST" role="form">
+                    <form action="{{ url('addpackage') }}" method="POST" role="form">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <input type="hidden" name="folder_id" value="{{ $folder['folder_id'] }}">
 
                         <div class="form-group">
-                            <label for="">Ten package:</label>
-                            <input type="text" class="form-control" id="name_folder" name="name_folder" placeholder="Ten thu muc">
-                        </div>      
-                        <button type="submit" id="add_folder" name="add_folder" class="btn btn-primary">Add</button>
+                            <label for="">Tên</label>
+                            <input type="text" class="form-control" id="text_value" name="text_value" placeholder="Tên package">
+                        </div> 
+                        <div class="form-group">
+                            <label for="">Mô tả</label>
+                            <input type="text" class="form-control" id="describe_value" name="describe_value" placeholder="Mô tả">
+                        </div> 
+                        <div class="form-group">
+                            <label for="">Giá</label>
+                            <input type="text" class="form-control" id="package_cost" name="package_cost" placeholder="Giá">
+                        </div>     
+                        <button type="submit" id="add_package" name="add_package" class="btn btn-primary">Add</button>
                     </form>
                 </div>
             </div>
@@ -166,7 +177,3 @@
 @section('sidebar-total-buttom')
     @include('includes.sidebar-category-buttom')
 @endsection
-
-@section('script')
-
-@stop

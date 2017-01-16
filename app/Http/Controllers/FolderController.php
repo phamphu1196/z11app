@@ -22,12 +22,12 @@ class FolderController extends Controller
             $categories= $content['metadata'];
 
             // Get folders
-            $folders = $client->request('GET', 'http://kien.godfath.com/api/v1/folder/'.$folder_id);
-            $contents = json_decode($folders->getBody()->getContents(), true);
-            $folders = $contents['metadata'];
-            // dd($folders);
+            $folder = $client->request('GET', 'http://kien.godfath.com/api/v1/folder/'.$folder_id);
+            $contents = json_decode($folder->getBody()->getContents(), true);
+            $folder = $contents['metadata'];
+            // dd($folder);
 
-            return view('frontend.folder')->with('categories', $categories)->with('folders', $folders);
+            return view('frontend.folder')->with('categories', $categories)->with('folder', $folder);
         } catch (RequestException $re) {
             echo "Error!";
         }     

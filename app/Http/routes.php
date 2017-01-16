@@ -69,6 +69,7 @@ Route::group(['middleware' => 'users'], function() {
     Route::get('create', 'CategoryController@createQuestion');
 
     Route::post('addfolder', 'FolderController@postAddFolder');
+    Route::post('addpackage', 'PackageController@postAddPackage');
 
     // Route::post('edituser', 'UserController@postEditUser');
 });
