@@ -2,7 +2,7 @@
 @extends('layouts.app')
 
 @section('title')
-    Folders
+    Packages
 @endsection
 
 @section('style')
@@ -140,9 +140,7 @@
 @section('end-sidebar-total-top')
      @include('includes.sidebar-buttom')
 @endsection
-
 @section('content')     
-    <!-- Modal -->
     <div class="modal fade" id="modal-id">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -174,6 +172,7 @@
         </div>
     </div>
 @endsection
+
 
 @section('sidebar-total-buttom')
     @include('includes.sidebar-category-buttom')
