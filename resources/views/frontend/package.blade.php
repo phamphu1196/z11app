@@ -100,11 +100,11 @@
             $session = 0;
         }
     ?>
-    <li class="nav-head"><a href="{{ url('/') }}">Chuyên mục:</a></li> 
+    <li class="nav-head"><a href="{{ url('/') }}">Danh sách chapter</a></li> 
 
-    @foreach($folder['package'] as $package)
-        <li><a href="{{ url('/') }}">{{ $package['translate_name_text'][$session]['text_value'] }}</a></li>
-    @endforeach
+    {{-- @foreach($folder['package'] as $package) --}}
+        {{-- <li><a href="{{ url('/') }}">{{ $package['translate_name_text'][$session]['text_value'] }}</a></li> --}}
+    {{-- @endforeach --}}
 @endsection
 
 @section('content-sidebar-total-top')
@@ -113,10 +113,12 @@
     <div class="links">
         <ol class="breadcrumb">
             <?php
-                $category = $folder['category'];
+                $folder_id = $folder['folder_id'];
+                $text_value = changeTitle($folder['translate_name_text'][$session]['text_value'].' '.$folder_id);
             ?>
             <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
-            <li class="breadcrumb-item"><a href="#">{{ $folder['translate_name_text'][$session]['text_value'] }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ url('/folder/'.$text_value) }}">{{ $folder['translate_name_text'][$session]['text_value'] }}</a></li>
+            <li class="breadcrumb-item">{{ $package['translate_name_text'][$session]['text_value'] }}</li>
         </ol>
     </div>
     <div class="button-add">
@@ -124,13 +126,13 @@
     </div>
     <div class="clearnfix"></div>
 
-    @foreach($folder['package'] as $package)
+    @foreach($package['chapters'] as $chapter)
         <a href="{{ url('/') }}">
             <div class="col-md-3 text-center">
                 <div class="panel panel-warning panel-pricing">
-                    <img src="{{ asset('image/gx3.jpg') }}" style="width: 100%;" alt="">
-                    <h3>{{ $package['translate_name_text'][$session]['text_value'] }}</h3>
-                    <h4 style="color: green">Cost: {{ $package['package_cost'] }}</h4>
+                    <img src="{{ asset('image/gx4.jpg') }}" style="width: 100%;" alt="">
+                    <h3>{{ $chapter['name_text'] }}</h3>
+                    
                 </div>
             </div>
         </a>     
@@ -146,26 +148,23 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Add Package</h4>
+                    <h4 class="modal-title">Add Chapter</h4>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ url('addpackage') }}" method="POST" role="form">
+                    <form action="{{ url('/addchapter') }}" method="POST" role="form">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                        <input type="hidden" name="folder_id" value="{{ $folder['folder_id'] }}">
+                        <input type="hidden" name="package_id" value="{{ $package['package_id'] }}">
+                        <input type="hidden" name="name_text_id" value="{{ changeTitle($package['translate_name_text'][$session]['text_value'].' '.$package['package_id']) }}">
 
                         <div class="form-group">
                             <label for="">Tên</label>
-                            <input type="text" class="form-control" id="text_value" name="text_value" placeholder="Tên package">
+                            <input type="text" class="form-control" id="name_text" name="name_text" placeholder="Tên chapter">
                         </div> 
                         <div class="form-group">
                             <label for="">Mô tả</label>
-                            <input type="text" class="form-control" id="describe_value" name="describe_value" placeholder="Mô tả">
-                        </div> 
-                        <div class="form-group">
-                            <label for="">Giá</label>
-                            <input type="text" class="form-control" id="package_cost" name="package_cost" placeholder="Giá">
-                        </div>     
-                        <button type="submit" id="add_package" name="add_package" class="btn btn-primary">Add</button>
+                            <input type="text" class="form-control" id="describe_text" name="describe_text" placeholder="Mô tả">
+                        </div>    
+                        <button type="submit" id="add_chapter" name="add_chapter" class="btn btn-primary">Add</button>
                     </form>
                 </div>
             </div>

@@ -100,7 +100,7 @@
             $session = 0;
         }
     ?>
-    <li class="nav-head"><a href="{{ url('/') }}">Chuyên mục:</a></li> 
+    <li class="nav-head"><a href="{{ url('/') }}">Danh sách package</a></li> 
 
     @foreach($folder['package'] as $package)
         <li><a href="{{ url('/') }}">{{ $package['translate_name_text'][$session]['text_value'] }}</a></li>
@@ -116,7 +116,7 @@
                 $category = $folder['category'];
             ?>
             <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
-            <li class="breadcrumb-item"><a href="#">{{ $folder['translate_name_text'][$session]['text_value'] }}</a></li>
+            <li class="breadcrumb-item">{{ $folder['translate_name_text'][$session]['text_value'] }}</li>
         </ol>
     </div>
     <div class="button-add">
@@ -125,7 +125,11 @@
     <div class="clearnfix"></div>
 
     @foreach($folder['package'] as $package)
-        <a href="{{ url('/') }}">
+        <?php
+            $folder_id = $package['package_id'];
+            $text_value = changeTitle($package['translate_name_text'][$session]['text_value'].' '.$folder_id);
+        ?>
+        <a href="{{ url('/package/'.$text_value) }}">
             <div class="col-md-3 text-center">
                 <div class="panel panel-warning panel-pricing">
                     <img src="{{ asset('image/gx3.jpg') }}" style="width: 100%;" alt="">
@@ -154,6 +158,7 @@
                     <form action="{{ url('addpackage') }}" method="POST" role="form">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <input type="hidden" name="folder_id" value="{{ $folder['folder_id'] }}">
+                        <input type="hidden" name="name_text" value="{{ changeTitle($folder['translate_name_text'][$session]['text_value'].' '.$folder['folder_id']) }}">
 
                         <div class="form-group">
                             <label for="">Tên</label>

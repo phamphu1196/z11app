@@ -12,7 +12,7 @@ use GuzzleHttp\Exception\RequestException;
 
 class CategoryController extends Controller
 {
-    public function getCategory(Request $request,$category_code)
+    public function getListOfCategories(Request $request,$category_code)
     {
       if ($category_code != '') {
         try {

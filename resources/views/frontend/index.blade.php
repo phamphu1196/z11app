@@ -111,10 +111,10 @@
                     @if ($folder['category']['category_id'] == $category['category_id'])
                         <?php
                             $folder_id = $folder['folder_id'];
-                            $category_code = changeTitle($category['category_code']);
+                            // $category_code = changeTitle($category['category_code']);
                             $text_value = changeTitle($folder['translate_name_text'][$session]['text_value'].' '.$folder_id);
                         ?>
-                        <li><a href="{{ url($category_code.'/'.$text_value) }}">{{ $folder['translate_name_text'][$session]['text_value'] }}</a></li>
+                        <li><a href="{{ url('/folder/'.$text_value) }}">{{ $folder['translate_name_text'][$session]['text_value'] }}</a></li>
                     @endif                   
                 @endforeach
                 </ul>
@@ -141,10 +141,10 @@
     @foreach($folders as $folder)
         <?php 
             $folder_id = $folder['folder_id'];
-            $category_code = changeTitle($folder['category']['category_code']);
+            // $category_code = changeTitle($folder['category']['category_code']);
             $translate_name_text = changeTitle($folder['translate_name_text'][$session]['text_value'].' '.$folder_id);
         ?>
-        <a href="{{ url('/'.$category_code.'/'.$translate_name_text) }}">
+        <a href="{{ url('/folder/'.$translate_name_text) }}">
             <div class="col-md-3 text-center">
                 <div class="panel panel-warning panel-pricing">
                 <img src="{{ asset('image/gx2.jpg') }}" style="width: 100%;" alt="">
@@ -176,7 +176,7 @@
             </li>
         </ul>
     </nav>
-    
+
     @include('includes.sidebar-buttom')    
 @endsection
 

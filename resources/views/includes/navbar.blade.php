@@ -50,3 +50,9 @@
 		</div>
 	</div>
 </nav>
+
+{{-- <style>
+	nav.navbar-findcond {
+		background: blue;
+	}
+</style> --}}
