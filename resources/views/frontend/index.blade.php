@@ -107,13 +107,15 @@
             <a data-toggle="collapse" data-parent="#accordion" href="#{{$href}}"><i class="fa fa-list-alt fa-fw"></i>{{ $category['category_code'] }}</a>
             <div id="{{$href}}" class="panel-collapse collapse">
                 <ul class="nav nav-stacked">
-                @foreach ($category['folder'] as $folder)
-                    <?php
-                        $folder_id = $folder['folder_id'];
-                        $category_code = changeTitle($category['category_code']);
-                        $text_value = changeTitle($folder['translate_name_text'][$session]['text_value']);
-                    ?>
-                    <li><a href="{{ url($category_code.'/'.$folder_id.'/'.$text_value) }}">{{ $folder['translate_name_text'][$session]['text_value'] }}</a></li>
+                @foreach ($folders as $folder)
+                    @if ($folder['category']['category_id'] == $category['category_id'])
+                        <?php
+                            $folder_id = $folder['folder_id'];
+                            $category_code = changeTitle($category['category_code']);
+                            $text_value = changeTitle($folder['translate_name_text'][$session]['text_value']);
+                        ?>
+                        <li><a href="{{ url($category_code.'/'.$folder_id.'/'.$text_value) }}">{{ $folder['translate_name_text'][$session]['text_value'] }}</a></li>
+                    @endif                   
                 @endforeach
                 </ul>
             </div>
