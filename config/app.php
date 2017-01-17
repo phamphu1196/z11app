@@ -155,6 +155,7 @@ return [
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        PulkitJalan\Google\GoogleServiceProvider::class,
 
     ],
 
@@ -201,6 +202,8 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'Google' => PulkitJalan\Google\Facades\Google::class,
+        'Input' => Illuminate\Support\Facades\Input::class,
 
     ],
 

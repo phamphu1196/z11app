@@ -63,6 +63,9 @@
           width: 80%;
           margin-left: 50px;
         }
+        a:hover {
+          text-decoration: none;
+        }
     </style>
 @endsection
 @section('navbar')
@@ -70,7 +73,7 @@
 @endsection
 @section('sidebar-total-top')
   @include('includes.sidebar-top')
-  <li class="active"><a href="{{ url('/') }}"><i class="fa fa-bars fa-fw"></i>Chuyen muc</a></li>
+  <li class="active"><a href="{{ url('/') }}"><i class="fa fa-bars fa-fw"></i>Chuyên Mục</a></li>
     @foreach($categories as $category)
         <li><a href="{{ url('/'.$category['category_code']) }}"><i class="fa fa-list-alt fa-fw"></i>{{ $category['category_code'] }}</a></li>
     @endforeach
@@ -78,23 +81,23 @@
 @section('content-sidebar-total-top')
   @include('includes.sidebar-middle')
     <div class="button-add">
-        <button type="button" class="btn btn-success" data-toggle="modal" href='#modal-id'>Add Folder</button>
+        <button type="button" class="btn btn-success" data-toggle="modal" href='#modal-id'>Thêm Thư Mục</button>
      </div>
      <div class="clearnfix"></div>
      <hr>
       @foreach($categories as $category)
             @foreach($category['folder'] as $folder)
-                 <a href="{{ url('/folder/'.$folder['folder_id']) }}">
+                 
             <div class="col-md-3 text-center">
                 <div class="panel panel-warning panel-pricing">
+                <a href="{{ url($category['category_code'].'/'.$folder['translate_name_text'][0]['text_value']) }}">
                         <img src="{{ asset('image/gx2.jpg') }}" style="width: 100%;" alt="">
                         <h3>{{$folder['item_code']}}</h3>
                     <div class="panel-body text-center">
-                    
+                      
                     </div>
-                    <ul class="list-group text-center">
-
-                    </ul>
+                    
+                </a>
                 </div>
             </div>
         </a>
@@ -111,13 +114,13 @@
          <div class="modal-content">
            <div class="modal-header">
              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-             <h4 class="modal-title">Them Thu Muc</h4>
+             <h4 class="modal-title">Thêm Thư Mục</h4>
            </div>
            <div class="modal-body">
              <form action="{{ url('addfolder') }}" method="POST" role="form">
              <input type="hidden" name="language" id="language" class="form-control" value="en" required="required" title="">
              <div class="form-group">
-                 <label for="">Chon category:</label>
+                 <label for="">Chọn chuyên mục:</label>
                  <select name="category_id" id="category_id" class="form-control" required="required">
                   @foreach($categories as $category)
                       <option value="{{ $category['category_id'] }}">{{ $category['category_code'] }}</option>

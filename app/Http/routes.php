@@ -10,6 +10,12 @@
 | and give it the controller to call when that URI is requested.
 |
 */
+Route::get('test','TestController@test');
+Route::get('/upload', function() {
+	return view('test');
+});
+Route::post('upload',['as' => 'upload', 'uses' => 'TestController@test']);
+
 Route::group(['namespace' => 'Admin','middleware' => 'admin'], function(){
 	Route::get("/admin/dashboard",'AdminController@getDashboard');
 	Route::get('admin/category/{id?}', 'CategoryController@getCategoryId');
