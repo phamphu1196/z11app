@@ -10,7 +10,7 @@ use GuzzleHttp\Client as GuzzleHttpClient;
 use GuzzleHttp\Exception\RequestException;
 class FolderController extends Controller
 {
-    public function getFolder(Request $request, $category_code, $folder_id, $translate_name_text)
+    public function getFolder(Request $request, $category_code, $translate_name_text)
     {
 
     	try {           
@@ -23,6 +23,8 @@ class FolderController extends Controller
             $categories= $content['metadata'];
 
             // Get folders
+            $arr = explode('-', $translate_name_text);
+            $folder_id = end($arr);
             $folder = $client->request('GET', 'http://kien.godfath.com/api/v1/folder/'.$folder_id);
             $contents = json_decode($folder->getBody()->getContents(), true);
             $folder = $contents['metadata'];
