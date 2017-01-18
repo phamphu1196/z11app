@@ -14,10 +14,6 @@ class HomeController extends Controller
      *
      * @return void
      */
-    // public function __construct()
-    // {
-    //     $this->middleware('auth');
-    // }
 
     /**
      * Show the application dashboard.
@@ -27,21 +23,25 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         try {
-            $limit = 4;
+            $limit = 8;
+            $page = $request->exists('page') ? $request->input('page') : 1;
+            $offset = ($page - 1) * $limit;           
 
             $client = new GuzzleHttpClient();
             $categories = $client->request('GET', 'http://kien.godfath.com/api/v1/categories/all/0'); 
             $content = json_decode($categories->getBody()->getContents(), true);
             $categories= $content['metadata'];
+            // dd($categories);
 
-            $folders = $client->request('GET', 'http://kien.godfath.com/api/v1/folders/all/0'); 
+            $folders = $client->request('GET', 'http://kien.godfath.com/api/v1/folders/'.$limit.'/'.$offset); 
             $contents = json_decode($folders->getBody()->getContents(), true);
             $folders = $contents['metadata'];
-            // $folders_group = $folders->skip(0)->take(4);
-            // dd($categories);
+            $total_folder = $folders[0]['count'];
             // dd($folders);
-            // dd($folders_group);
-            return view('frontend.index')->with('categories', $categories)->with('folders',$folders);
+
+            $total_page = ceil($total_folder / $limit) ;
+
+            return view('frontend.index')->with('categories', $categories)->with('folders',$folders)->with('total_page', $total_page)->with('current_page', $page);
         } catch (RequestException $re) {
             echo "Error!";
         }

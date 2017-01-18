@@ -38,9 +38,9 @@ Route::get('edituser', 'UserController@editUser');;
 Route::get('purchases', 'UserController@getPurchases');
 Route::post('language', 'UserController@postLanguage');
 
-Route::get('/',['as'=>'home', 'uses'=> 'HomeController@index']); //list of folders
+Route::get('/{page?}',['as'=>'home', 'uses'=> 'HomeController@index']); //list of folders
 
-Route::get('/{category_code?}', 'CategoryController@getListOfCategories'); //list of categories
+// Route::get('/{category_code?}', 'CategoryController@getListOfCategories'); //list of categories
 
 Route::get('/folder/{translate_name_text?}', 'FolderController@getListOfPackages'); //list of packages
 
