@@ -17,12 +17,12 @@ return [
     | https://developers.google.com/console
     |
     */
-    'client_id'       => env('GOOGLE_CLIENT_ID', '1084347997582-pighdbjdcek0mj3screjp27ce6objot7.apps.googleusercontent.com'),
-    'client_secret'   => env('GOOGLE_CLIENT_SECRET', 'PNXuK3vPkUlXoXErMNzbGdF0'),
-    'redirect_uri'    => env('GOOGLE_REDIRECT', '["urn:ietf:wg:oauth:2.0:oob","http://localhost"]'),
-    'scopes'          => ['https://www.googleapis.com/auth/drive','https://www.googleapis.com/auth/drive.metadata'],
-    'access_type'     => 'online',
-    'approval_prompt' => 'auto',
+    'client_id'       => env('GOOGLE_CLIENT_ID', '1084347997582-4mvbpdda81bv32075rkclimghf3bv2lf.apps.googleusercontent.com'),
+    'client_secret'   => env('GOOGLE_CLIENT_SECRET', 'KO81-sm-0TrNPwQSBMvANOB2'),
+    'redirect_uri'    => env('GOOGLE_REDIRECT', 'http://localhost/z11app/public/upload'),
+    'scopes'          => ['https://www.googleapis.com/auth/drive'],
+    'access_type'     => 'offline',
+    'approval_prompt' => 'force',
 
     /*
     |----------------------------------------------------------------------------
@@ -33,7 +33,7 @@ return [
     | a Server key, and not a Browser key.
     |
     */
-    'developer_key' => env('GOOGLE_DEVELOPER_KEY', 'c8df7b49652f1cb70526ae62777be1ed5700cc27'),
+    'developer_key' => env('GOOGLE_DEVELOPER_KEY', '7282f09f2b9b096099913ab0055d715075fc2f94'),
 
     /*
     |----------------------------------------------------------------------------
@@ -53,6 +53,6 @@ return [
         /*
         | Path to service account json file
         */
-        'file' => env('GOOGLE_SERVICE_ACCOUNT_JSON_LOCATION', '')
+        'file' => env('GOOGLE_SERVICE_ACCOUNT_JSON_LOCATION', '/drive/elearning.json')
     ],
 ];
