@@ -6,18 +6,16 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use Google;
-use Google_Service_Drive;
+use Session;
+use Illuminate\Support\Facades\Input;
 use GuzzleHttp\Client as GuzzleHttpClient;
 use GuzzleHttp\Exception\RequestException;
-use Session;
-use Input;
-use Google_ParentReference;
 
 class TestController extends Controller
 {
     public function test(Request $request) {
     	$name = $request->file('file')->getClientOriginalName();
-    	$request->file('file')->move('images', 'save.jpg');
+    	$request->file('file')->move('images', 'save.mp3');
 
     	$client = Google::getClient();
     	
@@ -27,6 +25,7 @@ class TestController extends Controller
      //  	}
      //  	// Step 2: The user accepted your access now you need to exchange it.
      //  	if (Input::has('code')) {
+     //  		dd(Input::get('code'));
      //    	$accessToken = $client->authenticate(Input::get('code'));
      //    	dd($client->getRefreshToken());
         	$refreshToken = '1/4bhwjA7MeBeeFVQ-r5yGv_YjVCrZLcpi9f3-Scbc4Vs';
@@ -35,20 +34,23 @@ class TestController extends Controller
       	// if($client->getAccessToken()) {
       		$drive = Google::make('drive');
 	    	$file = Google::make('Drive_DriveFile');
+
+	    	
 	        $file->setName($name);
 	        $file->setDescription('A test picture');
-	        $file->setMimeType('image/jpeg');
+	        $file->setMimeType('audio/mp3');
 			$file->setParents(array('0B8UMM8ddaNq0Um1YTEdVbVJDRVE'));
 	        
-	        $data = file_get_contents('F:\xampp\htdocs\nguyen\z11app\public\images\save.jpg');
+	        $data = file_get_contents('F:\xampp\htdocs\nguyen\z11app\public\images\save.mp3');
 	        $createdFile = $drive->files->create($file, array(
 	          'data' => $data,
 	          'uploadType' => 'media',
-	          'mimeType' => 'image/jpeg',
+	          'mimeType' => 'audio/mp3',
         	));
         	$id = $createdFile->getId();
         	$content = 'https://docs.google.com/uc?export=download&id='.$id;
-        	echo " <img src='".$content."' alt=''> ";
+        	// echo " <img src='".$content."' alt=''> ";
+            echo " <audio src='".$content."' autobuffer autoloop loop controls></audio> ";
         	
         	return $content;
     	//}

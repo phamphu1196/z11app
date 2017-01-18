@@ -23,7 +23,7 @@
         	background: red;
         }
         .edit-header {
-        	background: blue;
+        	background: #0FD5C9;
         }
 
         .stt {
@@ -35,6 +35,12 @@
         .cate_culum {
         	width: 60%;
         }
+        .add-category-button button {
+        	float: right;
+        }
+        .add-header {
+        	background: blue;
+        }
     </style>
 @endsection
 @section('sidebar-total-top')
@@ -43,13 +49,17 @@
 
 @section('content-sidebar-total-top')
 	<div class="row">
+		<div class="col-xs-12">
+			<div class="add-category-button">
+				<button type="button" class="btn btn-primary" data-toggle="modal" href='#add-category'><span class="	glyphicon glyphicon-plus">Add</span></button>
+			</div>
+		</div>
 		<div class="content-category">
 			<table class="table table-hover">
 				<thead>
 					<tr>
 						<th class="stt">Category ID</th>
 						<th class="cate_culum">Category Name</th>
-						<th class="add_culum">Add</th>
 						<th class="edit_culum">Edit</th>
 						<th class="delete_culum">Delete</th>
 					</tr>
@@ -64,9 +74,6 @@
 								{{ $translate_name_text['language_code']}} => {{ $translate_name_text['text_value'] }} ,
 							@endforeach
 							{{ '}' }}
-						</td>
-						<td>
-							<a class="add" name="add" data-toggle="modal" href='#add-category'><span class="	glyphicon glyphicon-plus">Add</span></a>
 						</td>
 						<td>
 							<a class="edit" name="edit" data-toggle="modal" href='#edit-category'><span class="glyphicon glyphicon-pencil">Edit</span></a>

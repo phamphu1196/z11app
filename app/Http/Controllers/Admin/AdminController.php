@@ -12,21 +12,19 @@ class AdminController extends Controller
 {
 	public function getDashboard(Request $request)
 	{
-		$headers = array(['Authorization'=> 'Bearer {'.$request->session()->get('token').'}']);
-		$client = new GuzzleHttpClient(['headers', $headers]);
+		$headers = array('Authorization' =>'Bearer {'.$request->session()->get('token').'}');
+      	$client = new GuzzleHttpClient(['headers'=> $headers]);
+
 		$categories = $client->request('GET', 'http://kien.godfath.com/api/v1/categories/all/0');
 		$categories = json_decode($categories->getBody()->getContents(), true);
 		$categories = $categories['metadata'];
-		// dd($categories);
-		return view('admin.dashboard')->with('categories', $categories);
-	}
-    public function getMember()
-    {
-    	$client = new GuzzleHttpClient();
-		$categories = $client->request('GET', 'http://kien.godfath.com/api/v1/category/get/'.$id); 
-      	
 
-      	$content = json_decode($categories->getBody()->getContents(), true);
-    	return view('admin.members');
-    }
+		$members = $client->request('GET', 'http://kien.godfath.com/api/v1/users/all/0'); 
+
+      	$content = json_decode($members->getBody()->getContents(), true);
+      	$members = $content['metadata'];
+
+		return view('admin.dashboard')->with('categories', $categories)->with('members',$members);
+	}
+
 }

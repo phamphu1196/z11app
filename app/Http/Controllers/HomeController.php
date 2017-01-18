@@ -24,19 +24,22 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         try {
             $client = new GuzzleHttpClient();
             $categories = $client->request('GET', 'http://kien.godfath.com/api/v1/categories/all/0'); 
-            // dd($categories);
- 
             $content = json_decode($categories->getBody()->getContents(), true);
             $categories= $content['metadata'];
-            
-            return view('frontend.index')->with('categories', $categories);
+
+            $folders = $client->request('GET', 'http://kien.godfath.com/api/v1/folders/all/0'); 
+            $contents = json_decode($folders->getBody()->getContents(), true);
+            $folders = $contents['metadata'];
+            // dd($categories);
+            // dd($folders);
+            return view('frontend.index')->with('categories', $categories)->with('folders',$folders);
         } catch (RequestException $re) {
-            echo "con duy";
+            echo "Error!";
         }
         
     }

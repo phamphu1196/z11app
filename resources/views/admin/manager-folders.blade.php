@@ -44,6 +44,11 @@
         .add-folder button {
         	float: right;
         }
+        #delete-folder .modal-content {
+			width: 50%;
+			margin-top: 30%;
+			margin-left: 30%;
+        }
     </style>
 @endsection
 @section('sidebar-total-top')

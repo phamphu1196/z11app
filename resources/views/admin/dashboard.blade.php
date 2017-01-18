@@ -48,23 +48,24 @@
 				</div>
 				<form action="{{ url('admin/category/edit') }}" method="POST" role="form">
 				<div class="modal-body">
+					<input type="hidden" id="_session" name="_session" value="{{session('language')}}">
 					<input type="hidden" name="_method" value="PUT">
-					<input type="hidden" name="catego_id" id="catego_id" value="">
+					<input type="hidden" name="categor_id" id="categor_id" value="">
 					<div class="form-group">
 						<label for="">Category Code:</label>
-						<input type="text" class="form-control" id="category_code" name="category_code" placeholder="Nhap .......">
+						<input type="text" class="form-control" id="categor_code" name="categor_code" placeholder="Nhap .......">
 					</div>
 					<div class="form-group">
 						<label for="">Image:</label>
-						<input type="file" class="form-control" id="image" name="image" placeholder="Nhap ......." accept="image/x-png,image/gif,image/jpeg">
+						<input type="file" class="form-control" id="imag" name="imag" placeholder="Nhap ......." accept="image/x-png,image/gif,image/jpeg">
 					</div>
 					<div class="form-group">
 						<label for="">Category translate:</label>
-						<input type="text" class="form-control" id="text_value" name="text_value" placeholder="Nhap .......">
+						<input type="text" class="form-control" id="text_valu" name="text_valu" placeholder="Nhap .......">
 					</div>
 					<div class="form-group">
 						<label for="">Category description:</label>
-						<input type="text" class="form-control" id="describe_value" name="describe_value" placeholder="Nhap .......">
+						<input type="text" class="form-control" id="describe_valu" name="describe_valu" placeholder="Nhap .......">
 					</div>
 					
 					</div>
@@ -87,8 +88,7 @@
 					<input type="hidden" name="_method" value="DELETE">
 					<div class="modal-body">
 					<div class="form-group">
-						<label for="">label</label>
-						<input type="hidden" name="category_id" id="category_id" class="form-control" value="" required="required" pattern="" title="">
+						<input type="hidden" name="categ_id" id="categ_id" class="form-control" value="" required="required" pattern="" title="">
 						Ban co chac muon delete <strong class="cate_code"></strong> khong
 					</div>
 					
@@ -103,6 +103,7 @@
 		</div>
 	</div>
 @endsection
+
 @section('script')
     <script type="text/javascript">
     	$(document).ready(function() {
@@ -124,12 +125,14 @@
     		$('.edit').click(function(event) {
     			/* Act on the event */
     			event.preventDefault();
+    			var language = $('#_session').val();
     			var category_id = $(this).parents('.cate').children('.category_id').val();
     			var url = '/z11app/public/admin/category/'+category_id;
     			$.get(url, function(data) {
-	    			$('#catego_id').val(data['category_id']);
-	    			$('#category_code').val(data['category_code']);
-	    			// $('#image').val(data['image']);
+	    			$('#categor_id').val(data['category_id']);
+	    			$('#categor_code').val(data['category_code']);
+	    			$('#text_valu').val(data['translate_name_text'][language]['text_value']);
+	    			$('#describe_valu').val(data['translate_describe_text'][language]['text_value']);
 	    		});
     		});
     		

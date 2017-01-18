@@ -53,6 +53,6 @@ return [
         /*
         | Path to service account json file
         */
-        'file' => env('GOOGLE_SERVICE_ACCOUNT_JSON_LOCATION', 'F:\xampp\htdocs\nguyen\z11app\My Project-a7882abe556d.json')
+        'file' => env('GOOGLE_SERVICE_ACCOUNT_JSON_LOCATION', 'google\My Project-a7882abe556d.json')
     ],
 ];
