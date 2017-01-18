@@ -127,6 +127,13 @@
     </div>
     <div class="clearnfix"></div>
 
+    <!-- Notification -->
+    @if (session('successNoti'))
+        <div class="alert alert-success">
+            {{ session('successNoti') }}
+        </div>
+    @endif
+
     <!-- Show main content -->
     @foreach($package['chapters'] as $chapter)
         <?php
