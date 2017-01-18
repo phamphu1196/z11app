@@ -107,19 +107,26 @@
     @foreach($categories as $category)
         <?php $href = "collapse".$i++; ?>
         <li class="nav-items">
-            <a data-toggle="collapse" data-parent="#accordion" href="#{{$href}}"><i class="fa fa-list-alt fa-fw"></i>{{ $category['category_code'] }} <span class="badge">{{ count($category['folder']) }}</span></a>
+            <a data-toggle="collapse" data-parent="#accordion" href="#{{$href}}">
+                <i class="fa fa-list-alt fa-fw"></i>
+                {{ $category['category_code'] }} 
+                <span class="badge" style="float: right; background: #2ecc71">
+                    {{ count($category['folder']) }}
+                </span>
+            </a>
+
             <div id="{{$href}}" class="panel-collapse collapse">
                 <ul class="nav nav-stacked">
-                @foreach ($folders as $folder)
-                    @if ($folder['category']['category_id'] == $category['category_id'])
-                        <?php
-                            $folder_id = $folder['folder_id'];
-                            // $category_code = changeTitle($category['category_code']);
-                            $text_value = changeTitle($folder['translate_name_text'][$session]['text_value'].' '.$folder_id);
-                        ?>
-                        <li><a href="{{ url('/folder/'.$text_value) }}">{{ $folder['translate_name_text'][$session]['text_value'] }}</a></li>
-                    @endif                   
-                @endforeach
+                    @foreach ($folders as $folder)
+                        @if ($folder['category']['category_id'] == $category['category_id'])
+                            <?php
+                                $folder_id = $folder['folder_id'];
+                                // $category_code = changeTitle($category['category_code']);
+                                $text_value = changeTitle($folder['translate_name_text'][$session]['text_value'].' '.$folder_id);
+                            ?>
+                            <li><a href="{{ url('/folder/'.$text_value) }}">{{ $folder['translate_name_text'][$session]['text_value'] }}</a></li>
+                        @endif                   
+                    @endforeach
                 </ul>
             </div>
         </li>
@@ -130,6 +137,7 @@
 
   @include('includes.sidebar-middle')
 
+    <!-- Breadcrumb -->
     <div class="links">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
@@ -141,6 +149,7 @@
     <div class="clearnfix"></div>
     <hr>
 
+    <!-- Show main content -->
     @foreach($folders as $folder)
         <?php 
             $folder_id = $folder['folder_id'];

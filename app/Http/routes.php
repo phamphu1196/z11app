@@ -38,7 +38,7 @@ Route::get('edituser', 'UserController@editUser');;
 Route::get('purchases', 'UserController@getPurchases');
 Route::post('language', 'UserController@postLanguage');
 
-Route::get('/{page?}',['as'=>'home', 'uses'=> 'HomeController@index']); //list of folders
+Route::get('/',['as'=>'home', 'uses'=> 'HomeController@index']); //list of folders
 
 // Route::get('/{category_code?}', 'CategoryController@getListOfCategories'); //list of categories
 
@@ -46,9 +46,9 @@ Route::get('/folder/{translate_name_text?}', 'FolderController@getListOfPackages
 
 Route::get('/package/{text_value?}', 'PackageController@getListOfChapters'); //list of chapters
 
-Route::get('/{category_code}/{translate_name_text_folder}/{translate_name_text_package}/{translate_name_text_chapter?}', 'ChapterController@getchapter');
+Route::get('/group-question/{name_text?}', 'ChapterController@getListOfGroupQuestion'); //list of group question
 
-Route::get('/{category_code}/{translate_name_text_folder}/{translate_name_text_package}/{translate_name_text_chapter/{translate_name_text_chapter}}', 'ChapterController@getchapter');
+Route::get('/{translate_name_text_chapter}}', 'ChapterController@getchapter');
 
 
 //-------------------------------------------------------------
