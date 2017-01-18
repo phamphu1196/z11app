@@ -110,6 +110,7 @@
 @section('content-sidebar-total-top')
     @include('includes.sidebar-middle')
 
+    <!-- Breadcrumb -->
     <div class="links">
         <ol class="breadcrumb">
             <?php
@@ -124,6 +125,7 @@
     </div>
     <div class="clearnfix"></div>
 
+    <!-- Show main content -->
     @foreach($folder['package'] as $package)
         <?php
             $folder_id = $package['package_id'];
@@ -132,7 +134,7 @@
         <a href="{{ url('/package/'.$text_value) }}">
             <div class="col-md-3 text-center">
                 <div class="panel panel-warning panel-pricing">
-                    <img src="{{ asset('image/gx3.jpg') }}" style="width: 100%;" alt="">
+                    <img src="{{ asset('image/package-icon.jpg') }}" style="width: 100%;" alt="">
                     <h3>{{ $package['translate_name_text'][$session]['text_value'] }}</h3>
                     <h4 style="color: green">Cost: {{ $package['package_cost'] }}</h4>
                 </div>

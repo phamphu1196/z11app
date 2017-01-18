@@ -2,7 +2,7 @@
 @extends('layouts.app')
 
 @section('title')
-    Packages
+    Chapter
 @endsection
 
 @section('style')
@@ -100,7 +100,7 @@
             $session = 0;
         }
     ?>
-    <li class="nav-head"><a href="{{ url('/') }}">Danh sách Chapter</a></li> 
+    <li class="nav-head"><a href="{{ url('/') }}">Danh sách Group question</a></li> 
 
     {{-- @foreach($folder['package'] as $package) --}}
         {{-- <li><a href="{{ url('/') }}">{{ $package['translate_name_text'][$session]['text_value'] }}</a></li> --}}
@@ -110,16 +110,11 @@
 @section('content-sidebar-total-top')
     @include('includes.sidebar-middle')
 
-    <!-- Breadcrumb -->
     <div class="links">
         <ol class="breadcrumb">
-            <?php
-                $folder_id = $folder['folder_id'];
-                $text_value = changeTitle($folder['translate_name_text'][$session]['text_value'].' '.$folder_id);
-            ?>
+            
             <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
-            <li class="breadcrumb-item"><a href="{{ url('/folder/'.$text_value) }}">{{ $folder['translate_name_text'][$session]['text_value'] }}</a></li>
-            <li class="breadcrumb-item">{{ $package['translate_name_text'][$session]['text_value'] }}</li>
+
         </ol>
     </div>
     <div class="button-add">
@@ -127,17 +122,16 @@
     </div>
     <div class="clearnfix"></div>
 
-    <!-- Show main content -->
-    @foreach($package['chapters'] as $chapter)
+    @foreach($chapter['groupQuestion'] as $groupQuestion)
         <?php
-            $chapter_id = $chapter['chapter_id'];
-            $name_text = changeTitle($chapter['name_text'].' '.$chapter_id);
+            $group_question_id = $groupQuestion['group_question_id'];
+            // $name_text = changeTitle($chapter['name_text'].' '.$chapter_id);
         ?>
-        <a href="{{ url('/group-question/'.$name_text) }}">
+        <a href="{{ url('') }}">
             <div class="col-md-3 text-center">
                 <div class="panel panel-warning panel-pricing">
-                    <img src="{{ asset('image/chapter.png') }}" style="width: 100%;" alt="">
-                    <h3>{{ $chapter['name_text'] }}</h3>
+                    <img src="{{ $groupQuestion['group_question_image'] }}" style="width: 100%;" alt="">
+                    <h5>{{ $groupQuestion['group_question_content'] }}</h5>
                     
                 </div>
             </div>
@@ -148,8 +142,7 @@
 @section('end-sidebar-total-top')
      @include('includes.sidebar-buttom')
 @endsection
-@section('content')   
-    <!-- Modal -->  
+{{-- @section('content')     
     <div class="modal fade" id="modal-id">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -177,7 +170,7 @@
             </div>
         </div>
     </div>
-@endsection
+@endsection --}}
 
 
 @section('sidebar-total-buttom')
