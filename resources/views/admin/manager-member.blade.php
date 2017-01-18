@@ -91,10 +91,13 @@
 			</div>
 		</div>
 		<div class="content-category">
+			<?php
+				$i =1; 
+			?>
 			<table class="table table-hover" id="data-members" class="display" cellspacing="0" width="100%">
 				<thead>
 					<tr>
-						<th class="user_id_culum">User ID -sort-</th>
+						<th class="user_id_culum">STT -sort-</th>
 						<th class="user_name_culum">User Name -sort-</th>
 						<th class="user_email_culum">User Email -sort-</th>
 						<th class="type_user_culum">Type User -sort-</th>
@@ -105,7 +108,7 @@
 				<tbody>
 					@foreach($members as $user)
 					<tr class="member">
-						<td class="user_id_culum">{{$user['id']}}</td>
+						<td class="user_id_culum">{{$i}}</td>
 						<td class="user_name_culum">{{ $user['profile']['name'] }}</td>
 						<td class="user_email_culum">{{ $user['email'] }}</td>
 						<td class="type_user_culum">{{ $user['type_user']['name_role'] }}</td>
@@ -116,6 +119,9 @@
 							<a class="delete" name="delete" data-toggle="modal" href='#delete-user'><span class="glyphicon glyphicon-trash">Delete</span></a>
 						</td>
 					</tr>
+					<?php 
+						$i++;
+					?>
 					@endforeach
 				</tbody>
 			</table>
@@ -308,18 +314,6 @@
 	    		$.get(url_, function(data) {
 	    			$('.USER_NAME').text(data['profile']['name']);
 	    			$('#delete-user-id').val(data['id']);
-	    		});
-    		});
-    		$('.edit').click(function(event) {
-    			/* Act on the event */
-    			event.preventDefault();
-    			var user_id = $(this).parents('.member').children('.user_id_culum').text();
-    			var url_ = '/z11app/public/admin/users/'+user_id;
-    			$.get(url_, function(data) {
-    				
-	    			// $('#catego_id').val(data['category_id']);
-	    			// $('#category_code').val(data['category_code']);
-	    			// $('#image').val(data['image']);
 	    		});
     		});
     		

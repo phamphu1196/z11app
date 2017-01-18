@@ -21,9 +21,7 @@ Route::group(['namespace' => 'Admin','middleware' => 'admin'], function(){
 	Route::post('admin/member-mod/add', 'UserController@postUserMod');
 
 	Route::get('admin/category/{id?}', 'CategoryController@getCategoryId');
-	Route::post('admin/category/add', function() {
-	    //
-	});
+	Route::post('admin/category/add', 'CategoryController@postAddCategory');
 	Route::delete('admin/category/delete', 'CategoryController@deleteCategory');
 	Route::put('admin/category/edit', 'CategoryController@putEditCategory');
 	// Route::get('admin/manager-member', 'MemberController@managerMember');

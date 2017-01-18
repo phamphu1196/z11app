@@ -42,7 +42,7 @@ class UserController extends Controller
 
     public function getUserId(Request $request,$id)
     {
-    	$headers = array('Authorization' =>'Bearer {'.$request->session()->get('token').'}');
+    	 $headers = array('Authorization' =>'Bearer {'.$request->session()->get('token').'}');
       	$client = new GuzzleHttpClient(['headers'=> $headers]);
       	$users = $client->request('GET', 'http://kien.godfath.com/api/v1/admin/users/'.$id); 
       	$content = json_decode($users->getBody()->getContents(), true);
@@ -52,6 +52,11 @@ class UserController extends Controller
     public function deleteUserId(Request $request)
     {
     	$data = $request->all();
-    	
+      // dd($data);
+      // $data = ['uid'=>$data['delete-user-id']];
+    	$headers = array('Authorization' =>'Bearer {'.$request->session()->get('token').'}');
+      $client = new GuzzleHttpClient(['headers'=> $headers,'debug' => true]);
+      $response = $client->delete('http://kien.godfath.com/api/v1/admin/users/delete/'.$data['delete-user-id']);
+      return redirect('/admin/manager-member');
     }
 }
