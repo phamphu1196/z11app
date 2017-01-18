@@ -20,7 +20,7 @@ class FolderController extends Controller
         $content = json_decode($categories->getBody()->getContents(), true);
         $categories= $content['metadata'];
 
-        $members = $client->request('GET', 'http://kien.godfath.com/api/v1/users/all/0'); 
+        $members = $client->request('GET', 'http://kien.godfath.com/api/v1/admin/users/all/0'); 
 
         $content = json_decode($members->getBody()->getContents(), true);
         $members = $content['metadata'];

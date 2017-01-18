@@ -10,9 +10,16 @@
 | and give it the controller to call when that URI is requested.
 |
 */
+Route::get('drive-upload', 'DriverController@getUploadImage');
+Route::post('drive-upload', ['as'=>'upload','uses'=>'DriverController@postUploadImage']);
+Route::get('upload', 'DriverController@postUploadImage');
+
+
 Route::group(['namespace' => 'Admin','middleware' => 'admin'], function(){
 	Route::get("/admin/dashboard",'AdminController@getDashboard');
 	Route::get('/admin/manager-member', 'UserController@getAllUser');
+	Route::post('admin/member-mod/add', 'UserController@postUserMod');
+
 	Route::get('admin/category/{id?}', 'CategoryController@getCategoryId');
 	Route::post('admin/category/add', function() {
 	    //
