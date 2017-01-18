@@ -40,22 +40,22 @@ Route::get('logout', 'UserController@postLogout');
 
 Route::get('register', 'UserController@getRegister');
 Route::post('register', 'UserController@postRegister');
-Route::get('/timeline', 'UserController@showDocument');
+Route::get('timeline', 'UserController@showDocument');
 Route::get('edituser', 'UserController@editUser');;
 Route::get('purchases', 'UserController@getPurchases');
 Route::post('language', 'UserController@postLanguage');
 
-Route::get('/',['as'=>'home', 'uses'=> 'HomeController@index']);
+Route::get('/{page?}',['as'=>'home', 'uses'=> 'HomeController@index']); //list of folders
 
-Route::get('/{category_code?}', 'CategoryController@getCategory');
+// Route::get('/{category_code?}', 'CategoryController@getListOfCategories'); //list of categories
 
-Route::get('/{category_code}/{translate_name_text?}', 'FolderController@getFolder');
+Route::get('/folder/{translate_name_text?}', 'FolderController@getListOfPackages'); //list of packages
 
-Route::get('/{category_code}/{translate_name_text}/{translate_name_text_package?}', 'PackageController@getPackage');
+Route::get('/package/{text_value?}', 'PackageController@getListOfChapters'); //list of chapters
+
 Route::get('/{category_code}/{translate_name_text_folder}/{translate_name_text_package}/{translate_name_text_chapter?}', 'ChapterController@getchapter');
+
 Route::get('/{category_code}/{translate_name_text_folder}/{translate_name_text_package}/{translate_name_text_chapter/{translate_name_text_chapter}}', 'ChapterController@getchapter');
-
-
 
 
 //-------------------------------------------------------------
@@ -74,6 +74,7 @@ Route::group(['middleware' => 'users'], function() {
 
     Route::post('addfolder', 'FolderController@postAddFolder');
     Route::post('addpackage', 'PackageController@postAddPackage');
+    Route::post('addchapter', 'ChapterController@postAddChapter');
 
     // Route::post('edituser', 'UserController@postEditUser');
 });

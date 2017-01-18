@@ -80,6 +80,9 @@
             width: 90%;
             float: left;
         }
+        .clear {
+            clear: both;
+        }
     </style>
 @endsection
 
@@ -104,17 +107,17 @@
     @foreach($categories as $category)
         <?php $href = "collapse".$i++; ?>
         <li class="nav-items">
-            <a data-toggle="collapse" data-parent="#accordion" href="#{{$href}}"><i class="fa fa-list-alt fa-fw"></i>{{ $category['category_code'] }}</a>
+            <a data-toggle="collapse" data-parent="#accordion" href="#{{$href}}"><i class="fa fa-list-alt fa-fw"></i>{{ $category['category_code'] }} <span class="badge">{{ count($category['folder']) }}</span></a>
             <div id="{{$href}}" class="panel-collapse collapse">
                 <ul class="nav nav-stacked">
                 @foreach ($folders as $folder)
                     @if ($folder['category']['category_id'] == $category['category_id'])
                         <?php
                             $folder_id = $folder['folder_id'];
-                            $category_code = changeTitle($category['category_code']);
+                            // $category_code = changeTitle($category['category_code']);
                             $text_value = changeTitle($folder['translate_name_text'][$session]['text_value'].' '.$folder_id);
                         ?>
-                        <li><a href="{{ url($category_code.'/'.$text_value) }}">{{ $folder['translate_name_text'][$session]['text_value'] }}</a></li>
+                        <li><a href="{{ url('/folder/'.$text_value) }}">{{ $folder['translate_name_text'][$session]['text_value'] }}</a></li>
                     @endif                   
                 @endforeach
                 </ul>
@@ -141,22 +144,68 @@
     @foreach($folders as $folder)
         <?php 
             $folder_id = $folder['folder_id'];
-            $category_code = changeTitle($folder['category']['category_code']);
             $translate_name_text = changeTitle($folder['translate_name_text'][$session]['text_value'].' '.$folder_id);
         ?>
-        <a href="{{ url('/'.$category_code.'/'.$translate_name_text) }}">
-            <div class="col-md-3 text-center">
+        <a href="{{ url('/folder/'.$translate_name_text) }}">
+            <div class="col-md-3 col-xs-6 text-center">
                 <div class="panel panel-warning panel-pricing">
-                <img src="{{ asset('image/gx2.jpg') }}" style="width: 100%;" alt="">
+                <img src="{{ asset('image/Folder-icon.png') }}" style="width: 100%;" alt="">
                 <h3>{{$folder['translate_name_text'][$session]['text_value']}}</h3>
                 </div>
             </div>
         </a>
     @endforeach
+    <div class="clear"></div>
 @endsection
 
 @section('end-sidebar-total-top')
-    @include('includes.sidebar-buttom')
+    <!-- Pagination -->
+    <?php
+        $prev_page = $current_page - 1;
+        $next_page = $current_page + 1;
+    ?>
+
+    <nav aria-label="Page navigation" align="center">
+        <ul class="pagination">
+            @if ($prev_page == 0)
+                <li class="disabled">
+                    <a href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            @else
+                <li>
+                    <a href="{{ url('/?page='.$prev_page) }}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            @endif    
+
+            @for ($i = 1; $i <= $total_page; $i++)
+                <li 
+                    @if ($i == $current_page)
+                        class="active" 
+                    @endif
+                ><a href="{{ url('/?page='.$i) }}">{{ $i }}</a></li>
+            @endfor 
+
+            @if ($next_page > $total_page)
+                <li class="disabled">
+                    <a href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            @else
+                <li>
+                    <a href="{{ url('/?page='.$next_page) }}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            @endif    
+        </ul>
+    </nav>
+
+    @include('includes.sidebar-buttom')    
 @endsection
 
 @section('content')
