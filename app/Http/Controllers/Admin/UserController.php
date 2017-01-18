@@ -44,7 +44,7 @@ class UserController extends Controller
     {
     	$headers = array('Authorization' =>'Bearer {'.$request->session()->get('token').'}');
       	$client = new GuzzleHttpClient(['headers'=> $headers]);
-      	$users = $client->request('GET', 'http://kien.godfath.com/api/v1/users/'.$id); 
+      	$users = $client->request('GET', 'http://kien.godfath.com/api/v1/admin/users/'.$id); 
       	$content = json_decode($users->getBody()->getContents(), true);
       	$user = $content['metadata'];
       	return response()->json($user);

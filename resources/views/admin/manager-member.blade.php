@@ -304,7 +304,6 @@
     			/* Act on the event */
     			event.preventDefault();
     			var user_id = $(this).parents('.member').children('.user_id_culum').text();
-    			alert(user_id);
 				var url_ = '/z11app/public/admin/users/'+user_id;
 	    		$.get(url_, function(data) {
 	    			$('.USER_NAME').text(data['profile']['name']);
