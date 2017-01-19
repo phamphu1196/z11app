@@ -22,15 +22,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js" integrity="sha384-I6F5OKECLVtK/BL+8iSLDEHowSAfUo76ZL9+kGAgTRdiByINKJaqTPH/QVNS1VDb" crossorigin="anonymous"></script>
     {{-- <base href="{{ asset('') }}"> --}}
     
-    <style type="text/css" media="screen">
-        .navbar-brand { 
-            padding-top: 5px;
-        }
-    </style>
+    
     @yield('style')
     <style>
         html,body {
-            font-family: 'Lato';
+            font-family: "Raleway","HelveticaNeue","Helvetica Neue",sans-serif;
             width: 100%;
         }
         
@@ -40,13 +36,7 @@
         .fa-btn {
             margin-right: 6px;
         }
-        .lgg {
-            margin-top: 8px;
-            background: #3BE5FA;
-        }
-        .lgg select {
-            background: #3BE5FA;
-        }
+        
         .back-to-top {
             cursor: pointer;
             position: fixed;
@@ -63,6 +53,10 @@
             background: url({{ asset('image/squares.gif') }}) no-repeat center center;
         }
 
+        .banner {
+            margin-top: 40px;
+        }
+
     </style>
 </head>
 <body id="app-layout">
@@ -71,7 +65,7 @@
 
     <div class="page-body">
         @yield('navbar')
-        
+        @yield('banner')
         @yield('sidebar-total-top')
         @yield('content-sidebar-total-top')
         @yield('end-sidebar-total-top')
@@ -80,7 +74,7 @@
         <a id="back-to-top" href="#" class="btn btn-primary btn-lg back-to-top" role="button" title="Click to return on the top page" data-toggle="tooltip" data-placement="left"><span class="glyphicon glyphicon-chevron-up"></span></a>
 
     </div>
-
+    @include('includes.footer')
     <!-- JavaScripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
@@ -95,12 +89,13 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-            $('#language').change(function(event) {
+            $('.lang').click(function(event) {
                 /* Act on the event */
                 $("#loading").show();
 
                 event.preventDefault();
-                var language = $(this).val();
+                var language = $(this).attr('hreflang');
+                alert(language);
                 var url_ = '/z11app/public/language';
                 $('.page-body').css('opacity', '0.2');
                 $.post(url_, {

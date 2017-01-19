@@ -10,10 +10,10 @@
 | and give it the controller to call when that URI is requested.
 |
 */
+
 Route::get('drive-upload', 'DriverController@getUploadImage');
 Route::post('drive-upload', ['as'=>'upload','uses'=>'DriverController@postUploadImage']);
 Route::get('upload', 'DriverController@postUploadImage');
-
 
 Route::group(['namespace' => 'Admin','middleware' => 'admin'], function(){
 	Route::get("/admin/dashboard",'AdminController@getDashboard');
