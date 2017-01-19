@@ -10,10 +10,10 @@
 | and give it the controller to call when that URI is requested.
 |
 */
+
 Route::get('drive-upload', 'DriverController@getUploadImage');
 Route::post('drive-upload', ['as'=>'upload','uses'=>'DriverController@postUploadImage']);
 Route::get('upload', 'DriverController@postUploadImage');
-
 
 Route::group(['namespace' => 'Admin','middleware' => 'admin'], function(){
 	Route::get("/admin/dashboard",'AdminController@getDashboard');
@@ -47,13 +47,15 @@ Route::get('/',['as'=>'home', 'uses'=> 'HomeController@index']); //list of folde
 
 // Route::get('/{category_code?}', 'CategoryController@getListOfCategories'); //list of categories
 
+
 Route::get('/folder/{translate_name_text?}', 'FolderController@getListOfPackages'); //list of packages
 
+Route::post('/confirm-purchase', 'PackageController@purchasePackage');
 Route::get('/package/{text_value?}', 'PackageController@getListOfChapters'); //list of chapters
 
 Route::get('/group-question/{name_text?}', 'ChapterController@getListOfGroupQuestion'); //list of group question
 
-Route::get('/{translate_name_text_chapter}}', 'ChapterController@getchapter');
+// Route::get('/{translate_name_text_chapter}}', 'ChapterController@getchapter');
 
 
 //-------------------------------------------------------------

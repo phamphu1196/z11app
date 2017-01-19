@@ -7,8 +7,9 @@
 @section('style')
     <link rel="stylesheet" href="{{ asset('/css/sidebar.css') }}">
     <style type="text/css">
+
         .content-body {
-            margin-top: 40px;
+            margin-top: 20px;
             /*background: #fafafa;*/
         }
         .nav-stacked {
@@ -59,8 +60,10 @@
             clear: both;
         }
         .button-add button {
-            width: 10%;
+            width: 80px;
             float: right;
+            text-align: center;
+            padding: 6px;
         }
         .modal-body {
             width: 80%;
@@ -80,9 +83,26 @@
             width: 90%;
             float: left;
         }
+        a:hover {
+          text-decoration: none;
+        }
+        .nav li > a {
+            position: relative;
+        } 
+        .nav-items {
+            border-left: 5px solid;
+        }
+        li.nav-items {
+            border-color: #1897d4;
+        }
+        li.list-folder {
+            border-color: #ac3435 !important;
+        }
+
         .clear {
             clear: both;
         }
+
     </style>
 @endsection
 
@@ -90,7 +110,12 @@
     @include('includes.navbar')
 @endsection
 
+@section('banner')
+    @include('includes.banner')
+@endsection
+
 @section('sidebar-total-top')
+
     @include('includes.sidebar-top')
 
     <?php
@@ -108,7 +133,6 @@
         <?php $href = "collapse".$i++; ?>
         <li class="nav-items">
             <a data-toggle="collapse" data-parent="#accordion" href="#{{$href}}">
-                <i class="fa fa-list-alt fa-fw"></i>
                 {{ $category['category_code'] }} 
                 <span class="badge" style="float: right; background: #2ecc71">
                     {{ count($category['folder']) }}
@@ -124,7 +148,7 @@
                                 // $category_code = changeTitle($category['category_code']);
                                 $text_value = changeTitle($folder['translate_name_text'][$session]['text_value'].' '.$folder_id);
                             ?>
-                            <li><a href="{{ url('/folder/'.$text_value) }}">{{ $folder['translate_name_text'][$session]['text_value'] }}</a></li>
+                            <li class="list-folder"><a href="{{ url('/folder/'.$text_value) }}">{{ $folder['translate_name_text'][$session]['text_value'] }}</a></li>
                         @endif                   
                     @endforeach
                 </ul>
@@ -137,15 +161,21 @@
 
   @include('includes.sidebar-middle')
 
-    <!-- Breadcrumb -->
-    <div class="links">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
-        </ol>
+    <div class="col-xs-10">
+        <div class="links">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
+            </ol>
+        </div>
+
     </div>
-    <div class="button-add">
-        <button type="button" class="btn btn-success" data-toggle="modal" href='#modal-id'>Add Folder</button>
+    <div class="col-xs-1">
+        <div class="button-add">
+
+            <button type="button" class="btn btn-success" data-toggle="modal" href='#modal-id'>Add Folder</button>
+        </div>
     </div>
+    
     <div class="clearnfix"></div>
     <hr>
 
@@ -218,6 +248,7 @@
 @endsection
 
 @section('content')
+
     <div class="modal fade" id="modal-id">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -266,4 +297,5 @@
 @endsection
 
 @section('script')  
+
 @stop

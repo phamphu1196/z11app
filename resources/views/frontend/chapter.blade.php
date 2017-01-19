@@ -114,6 +114,17 @@
         <ol class="breadcrumb">
             
             <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
+            <?php
+                $folder_id = $chapter['folder']['folder_id'];
+                $folder_nametext = changeTitle($chapter['folder']['translate_name_text'][$session]['text_value'].' '.$folder_id);
+            ?>
+            <li class="breadcrumb-item"><a href="{{ url('/folder/'.$folder_nametext) }}">{{ $chapter['folder']['translate_name_text'][$session]['text_value'] }}</a></li>
+            <?php
+                $package_id = $chapter['package']['package_id'];
+                $package_nametext = changeTitle($chapter['package']['translate_name_text'][$session]['text_value'].' '.$package_id);
+            ?>
+            <li class="breadcrumb-item"><a href="{{ url('/package/'.$package_nametext) }}">{{ $chapter['package']['translate_name_text'][$session]['text_value'] }}</a></li>
+            <li class="breadcrumb-item">{{ $chapter['name_text'] }}</li>
 
         </ol>
     </div>

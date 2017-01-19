@@ -25,41 +25,34 @@ class ChapterController extends Controller
             $chapter = $contents['metadata'];
             // dd($chapter);
 
-            // Get group question
-            // $folder_id = $package['folder_id'];
-            // $folder = $client->request('GET', 'http://kien.godfath.com/api/v1/folder/'.$folder_id);
-            // $contents = json_decode($folder->getBody()->getContents(), true);
-            // $folder = $contents['metadata'];
-            // dd($folder);
-
             return view('frontend.chapter')->with('chapter', $chapter);
         } catch (RequestException $re) {
             echo "Error!";
         }     
     }
 
-    // public function postAddChapter(Request $request) {
-    //     try {
-    //         $data = $request->all();
+    public function postAddChapter(Request $request) {
+        try {
+            $data = $request->all();
 
-    //         $package_id = $data['package_id'];
-    //         $name_text_id = $data['name_text_id'];
+            $package_id = $data['package_id'];
+            $name_text_id = $data['name_text_id'];
 
-    //         $token = 'Bearer {'.$request->session()->get('token').'}';
-    //         $client = new GuzzleHttpClient();
-    //         $result = $client->post('http://kien.godfath.com/api/v1/chapters', [
-    //             'headers' => ['Authorization' => $token],
-    //             'form_params' => [
-    //                 'package_id' => $package_id,
-    //                 'name_text' => $data['name_text'],
-    //                 'describe_text' => $data['describe_text']
-    //             ]
-    //         ]);
-    //         $result = json_decode($result->getBody(), true);
-    //         return redirect('/package/'.$name_text_id);
+            $token = 'Bearer {'.$request->session()->get('token').'}';
+            $client = new GuzzleHttpClient();
+            $result = $client->post('http://kien.godfath.com/api/v1/chapters', [
+                'headers' => ['Authorization' => $token],
+                'form_params' => [
+                    'package_id' => $package_id,
+                    'name_text' => $data['name_text'],
+                    'describe_text' => $data['describe_text']
+                ]
+            ]);
+            $result = json_decode($result->getBody(), true);
+            return redirect('/package/'.$name_text_id);
 
-    //     } catch (ClientErrorResponseException $exception) {
-    //         $responseBody = $exception->getResponse()->getBody(true);
-    //     }
-    // }
+        } catch (ClientErrorResponseException $exception) {
+            $responseBody = $exception->getResponse()->getBody(true);
+        }
+    }
 }

@@ -10,7 +10,6 @@
     <style type="text/css">
         .content-body {
           margin-top: 60px;
-          /*background: #fafafa;*/
         }
         .nav-stacked {
           background: #ffffff;
@@ -126,6 +125,13 @@
         <button type="button" class="btn btn-success" data-toggle="modal" href='#modal-id'>Add</button>
     </div>
     <div class="clearnfix"></div>
+
+    <!-- Notification -->
+    @if (session('successNoti'))
+        <div class="alert alert-success">
+            {{ session('successNoti') }}
+        </div>
+    @endif
 
     <!-- Show main content -->
     @foreach($package['chapters'] as $chapter)
