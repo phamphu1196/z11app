@@ -29,9 +29,9 @@
 		<div class="col-md-3 col-xs-12 info">
 			<h4>Mạng xã hội</h4>
 			<ul>
-				<li><a href=""><img src="{{ asset('image\iconfb.png') }}" class="img-circle"> Facebook</a></li>
-				<li><a href=""><img src="{{ asset('image\icongg.png') }}" class="img-circle"> Google</a></li>
-				<li><a href=""><img src="{{ asset('image\icontwitter.png') }}" class="img-circle"> Twitter</a></li>
+				<li><a href=""><img src="{{ asset('image\iconfb.png') }}" class="img-circle img-social"> Facebook</a></li>
+				<li><a href=""><img src="{{ asset('image\icongg.png') }}" class="img-circle img-social"> Google</a></li>
+				<li><a href=""><img src="{{ asset('image\icontwitter.png') }}" class="img-circle img-social"> Twitter</a></li>
 			</ul>
 		</div>
 	</div>
@@ -84,7 +84,7 @@
 	    background-color: #e5e5e5;
 	    border-top: 1px solid #ddd;
 	}
-	.img-circle {
+	.img-social {
 		width: 38px;
 		height: 36px;
 	}
