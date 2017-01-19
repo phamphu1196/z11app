@@ -37,7 +37,13 @@ class UserController extends Controller
                 ]
             ]);
       $json = json_decode($res->getBody(),true);
-      return redirect('/admin/manager-member');
+      if ($json['code'] == 200) {
+        return redirect('/admin/manager-member')->with('noti_add_mod_secc','Them thenh cong tai khoan'.$data['email'].'');
+      }
+      else{
+        return redirect('/admin/manager-member')->with('noti_add_mod_fail','khong the them tai khoan'.$data['email'].'');
+      }
+      
     }
 
     public function getUserId(Request $request,$id)
@@ -57,6 +63,13 @@ class UserController extends Controller
     	$headers = array('Authorization' =>'Bearer {'.$request->session()->get('token').'}');
       $client = new GuzzleHttpClient(['headers'=> $headers,'debug' => true]);
       $response = $client->delete('http://kien.godfath.com/api/v1/admin/users/delete/'.$data['delete-user-id']);
-      return redirect('/admin/manager-member');
+      $content = json_decode($response->getBody()->getContents(), true);
+      if ($content['code'] == 200) {
+         return redirect('/admin/manager-member')->with('noti_secc_delete','Xoa thanh cong');
+      }
+      else {
+        return redirect('/admin/manager-member')->with('noti_fail_delete','khong the xao tai khoan');
+      }
+     
     }
 }

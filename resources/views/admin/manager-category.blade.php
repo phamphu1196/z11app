@@ -61,9 +61,24 @@
 			</div>
 		</div>
 		
-			@if (session('noti'))
+			@if (session('noti_secc_add'))
 				<div class="alert alert-success">
-					{{ session('noti') }}
+					{{ session('noti_secc_add') }}
+				</div>
+			@endif
+			@if (session('noti_fail_add'))
+				<div class="alert alert-danger">
+					{{ session('noti_fail_add') }}
+				</div>
+			@endif
+			@if (session('noti_secc_delete'))
+				<div class="alert alert-danger">
+					{{ session('noti_secc_delete') }}
+				</div>
+			@endif
+			@if (session('noti_fail_delete'))
+				<div class="alert alert-danger">
+					{{ session('noti_fail_delete') }}
 				</div>
 			@endif
 		
@@ -116,7 +131,7 @@
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 					<h4 class="modal-title">Add</h4>
 				</div>
-				<form action="{{ url('admin/category/add') }}" method="POST" role="form">
+				<form action="{{ url('admin/category/add') }}" method="POST" role="form" enctype="multipart/form-data">
 					<input type="hidden" name="_token" value="{{ csrf_token() }}">
 					<div class="modal-body">
 						<div class="form-group">
@@ -125,7 +140,7 @@
 						</div>
 						<div class="form-group">
 							<label for="">Image:</label>
-							<input type="file" class="form-control" id="image" name="image" placeholder="Nhap ......." accept="image/x-png,image/gif,image/jpeg">
+							<input type="file" class="form-control" id="file" name="file" placeholder="Nhap ......." accept="image/x-png,image/gif,image/jpeg">
 						</div>
 						<div class="form-group">
 							<label for="">Category translate:</label>
