@@ -140,11 +140,10 @@
             $name_text = changeTitle($chapter['name_text'].' '.$chapter_id);
         ?>
         <a href="{{ url('/group-question/'.$name_text) }}">
-            <div class="col-md-3 text-center">
+            <div class="col-md-3 col-xs-6 text-center">
                 <div class="panel panel-warning panel-pricing">
                     <img src="{{ asset('image/chapter.png') }}" style="width: 100%;" alt="">
-                    <h3>{{ $chapter['name_text'] }}</h3>
-                    
+                    <h4>{{ $chapter['name_text'] }}</h4>                  
                 </div>
             </div>
         </a>     

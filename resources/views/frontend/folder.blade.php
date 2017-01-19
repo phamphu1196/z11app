@@ -142,22 +142,40 @@
         </div>
     @endif
 
+    <?php
+        $packages_purchased_array = array();
+        foreach ($packages_purchased as $package) {
+            $packages_purchased_array[] = $package['item_id'];
+        }
+    ?>
+
     <!-- Show main content -->
     @foreach($folder['package'] as $package)
         <?php
-            $folder_id = $package['package_id'];
-            $text_value = changeTitle($package['translate_name_text'][$session]['text_value'].' '.$folder_id);
+            $package_id = $package['package_id'];
+            $text_value = changeTitle($package['translate_name_text'][$session]['text_value'].' '.$package_id);
+            if (in_array($package_id, $packages_purchased_array)) {
+                $status = "(Bought)";
+                $pkg_class = "pkg";
+                $href = url('/package/'.$text_value);
+            }
+            else {
+                $status = "";
+                $pkg_class = "pkg-coin";
+                $href = "#";
+            }
         ?>
-        <a class="pkg-coin" href="#">
+        <a class="{{ $pkg_class }}" href="{{ $href }}">
             <div class="url-pkg">
                 <input type="hidden" class="coin" value="{{ $package['package_cost'] }}">
+                <input type="hidden" class="pkg-id" value="{{ $package_id }}">
                 <input type="hidden" class="pkg-link" value="{{ url('/package/'.$text_value) }}">
             </div>
             <div class="col-md-3 text-center">
                 <div class="panel panel-warning panel-pricing">
                     <img src="{{ asset('image/package-icon.jpg') }}" style="width: 100%;" alt="">
                     <h3>{{ $package['translate_name_text'][$session]['text_value'] }}</h3>
-                    <h4 style="color: green">Cost: {{ $package['package_cost'] }}</h4>
+                    <h4 style="color: green">Cost: {{ $package['package_cost'].' '.$status }}</h4>
                 </div>
             </div>
         </a>     
@@ -181,11 +199,11 @@
                 <form action="{{ url('confirm-purchase') }}" method="POST" role="form">
                     <div class="modal-body">                      
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <input type="hidden" name="package_id" id="package_id" value="">
                         <input type="hidden" name="url" id="url" value="">
                         <input type="hidden" name="coin" id="coin" value="">
                         <input type="hidden" name="cur_url" value="{{ $cur_url }}">
-                        <p>Bạn có muốn mua gói này với giá <span id="coin-value" name="coin-value"></span> coin không?</p>                        
-                        {{-- <a id="url" href="#" type="submit" class="btn btn-primary">Mua</a> --}}    
+                        <p>Bạn có muốn mua gói này với giá <span id="coin-value" name="coin-value"></span> coin không?</p>   
                     </div>
 
                     <div class="modal-footer">
@@ -239,15 +257,16 @@
     <script>
         $(document).ready(function() {
             $('.pkg-coin').click(function(event) {
-                // alert(1);
                 var coin = $(this).children('.url-pkg').children('.coin').val();
                 var redirect = $(this).children('.url-pkg').children('.pkg-link').val();
-                // alert(redirect);
+                var package_id = $(this).children('.url-pkg').children('.pkg-id').val();
+
                 if(parseInt(coin) > 0){
                     $('#modal-coin-id').modal('show');
                     $("#modal-coin-id #coin-value").html(coin);
                     $("#modal-coin-id #url").attr('value', redirect);
                     $("#modal-coin-id #coin").attr('value', coin);
+                    $("#modal-coin-id #package_id").attr('value', package_id);
                 }
             });
         });

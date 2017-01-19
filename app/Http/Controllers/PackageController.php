@@ -40,6 +40,7 @@ class PackageController extends Controller
         $data = $request->all();
 
         $user_coin = $request->session()->get('coin');
+        $package_id = $data['package_id'];
         $url = $data['url'];
         $coin = $data['coin'];
         $cur_url = $data['cur_url'];
@@ -50,6 +51,8 @@ class PackageController extends Controller
         else {
             $token = 'Bearer {'.$request->session()->get('token').'}';
             $client = new GuzzleHttpClient();
+
+            // Change coin of user
             $result = $client->put('http://kien.godfath.com/api/v1/users/chargecoin', [
                 'headers' => ['Authorization' => $token],
                 'form_params' => [
@@ -59,6 +62,16 @@ class PackageController extends Controller
             $result = json_decode($result->getBody(), true);
             $coin_current = $result['coin current'];
             $request->session()->put('coin', $coin_current);
+
+            // Add purchase package for user
+            $result = $client->post('http://kien.godfath.com/api/v1/purchases', [
+                'headers' => ['Authorization' => $token],
+                'form_params' => [
+                    'item_id' => $package_id,
+                    'item_code' => 'package'
+                ]
+            ]);
+
             return redirect($url)->with('successNoti', "Mua gói thành công. Hiện tại bạn còn ".$coin_current." coin.");
         }
     }

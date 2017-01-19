@@ -28,9 +28,14 @@ class FolderController extends Controller
             $folder = $client->request('GET', 'http://kien.godfath.com/api/v1/folder/'.$folder_id);
             $contents = json_decode($folder->getBody()->getContents(), true);
             $folder = $contents['metadata'];
-            // dd($folder);
 
-            return view('frontend.folder')->with('categories', $categories)->with('folder', $folder);
+            // Get list of package that user bought
+            $user_id = $request->session()->get('id');
+            $packages_purchased = $client->request('GET', 'http://kien.godfath.com/api/v1/purchases/users/'.$user_id);
+            $contents = json_decode($packages_purchased->getBody()->getContents(), true);
+            $packages_purchased = $contents['metadata'];
+
+            return view('frontend.folder')->with('categories', $categories)->with('folder', $folder)->with('packages_purchased', $packages_purchased);
         } catch (RequestException $re) {
             echo "Error!";
         }     

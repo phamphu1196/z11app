@@ -1,2 +1,27 @@
 // @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+@import "header";
 
+$primary_color: #fff;
+$font_color: #fff;
+$font_size: 16px;
+
+phu_cho {
+	background-color: red;
+}
+
+ul li a {
+	
+}
+
+ul li {
+	background-color: $primary_color;
+}
+
+ul {
+	li {
+		background-color: $primary_color;
+		a {
+
+		}
+	}
+}
