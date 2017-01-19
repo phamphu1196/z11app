@@ -6,6 +6,8 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{ asset('/css/sidebar-admin.css') }}">
     <script src="{{ asset('/js/sidebar-admin.js') }}" type="text/javascript"></script>
+    <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+    
     <style type="text/css">
         .pull-left {
         	float: right;
@@ -33,7 +35,7 @@
         	width: 30%;
         }
         .type_user_culum {
-        	width: 40%;
+        	width: 20%;
         }
         .user_email_culum {
         	width: 60%;
@@ -67,6 +69,14 @@
 		.edit-header {
 			background: #199E80;
 		}
+		.form-group {
+			width: 90%;
+			margin-left: 20px;
+		}
+		.user_id_culum {
+			width: 15%;
+		}
+
     </style>
 @endsection
 @section('sidebar-total-top')
@@ -77,39 +87,41 @@
 	<div class="row">
 		<div class="col-xs-12">
 			<div class="add-category-button">
-				<button type="button" class="btn btn-primary" data-toggle="modal" href='#add-category'><span class="	glyphicon glyphicon-plus">Add</span></button>
+				<button type="button" class="btn btn-primary" data-toggle="modal" href='#add-member'><span class="	glyphicon glyphicon-plus">Add</span></button>
 			</div>
 		</div>
 		<div class="content-category">
-			<table class="table table-hover">
+			<?php
+				$i =1; 
+			?>
+			<table class="table table-hover" id="data-members" class="display" cellspacing="0" width="100%">
 				<thead>
 					<tr>
-						<th class="user_id_culum">User ID</th>
-						<th class="user_name_culum">User Name</th>
-						<th class="user_email_culum">User Email</th>
-						<th class="type_user_culum">Type User</th>
+						<th class="user_id_culum">STT -sort-</th>
+						<th class="user_name_culum">User Name -sort-</th>
+						<th class="user_email_culum">User Email -sort-</th>
+						<th class="type_user_culum">Type User -sort-</th>
 						<th class="view_culum">View</th>
-						<th class="edit_culum">Edit</th>
 						<th class="delete_culum">Delete</th>
 					</tr>
 				</thead>
 				<tbody>
 					@foreach($members as $user)
 					<tr class="member">
-						<td class="user_id_culum">{{$user['id']}}</td>
+						<td class="user_id_culum">{{$i}}</td>
 						<td class="user_name_culum">{{ $user['profile']['name'] }}</td>
 						<td class="user_email_culum">{{ $user['email'] }}</td>
 						<td class="type_user_culum">{{ $user['type_user']['name_role'] }}</td>
 						<td class="view_culum">
-							<a class="view" name="view" data-toggle="modal" href='#view-category'><span class="glyphicon glyphicon-open">View</span></a>
-						</td>
-						<td class="edit_culum">
-							<a class="edit" name="edit" data-toggle="modal" href='#edit-category'><span class="glyphicon glyphicon-edit">Edit</span></a>
+							<a class="view" name="view" data-toggle="modal" href='#view-member'><span class="glyphicon glyphicon-open">View</span></a>
 						</td>
 						<td class="delete_culum">
 							<a class="delete" name="delete" data-toggle="modal" href='#delete-user'><span class="glyphicon glyphicon-trash">Delete</span></a>
 						</td>
 					</tr>
+					<?php 
+						$i++;
+					?>
 					@endforeach
 				</tbody>
 			</table>
@@ -121,7 +133,7 @@
 	@include('includes.sidebar-admin-buttom')
 @endsection
 @section('content')
-<div class="modal fade" id="view-category">
+<div class="modal fade" id="view-member">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header view-header">
@@ -151,77 +163,80 @@
 	</div>
 </div>
 
-<div class="modal fade" id="add-category">
+<div class="modal fade" id="add-member">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header add-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 					<h4 class="modal-title">Add</h4>
 				</div>
-				<form action="{{ url('admin/category/add') }}" method="POST" role="form">
-				<div class="modal-body">
-					<input type="hidden" name="_method" value="PUT">
-					<input type="hidden" name="categ_id" id="categ_id" value="">
+				{{-- <form action="{{ url('admin/category/add') }}" method="POST" role="form"> --}}
+				<form action="{{ url('admin/member-mod/add') }}" method="POST" role="form" name="register" id="register-form">
+		            <div id="errors">
+		                @if (count($errors) > 0)
+		                <div class="alert alert-danger" role="alert">
+		                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+		                    @foreach ($errors->all() as $error)
+		                        {{-- <span class="sr-only">Error:</span> --}}
+		                        <li>{{$error}}</li>
+		                    @endforeach
+		                </div>
+		                @endif
+		            </div>
+		            {{ csrf_field() }}
+		            <div class="form-group">
+		                <label for="username">Name</label>
+		                <div class="input-group">
+		                    <div class="input-group-addon"><i class="fa fa-user" aria-hidden="true"></i></div>
+		                    <input type="text" class="form-control" id="name" placeholder="Name" name="name" required="true"
+		                    value="{{ old('name') }}">
+		                </div>
+		            </div>
+
+		            <div class="form-group">
+		                <label for="username">Email</label>
+		                <div class="input-group">
+		                    <div class="input-group-addon"><i class="fa fa-envelope" aria-hidden="true"></i></div>
+		                    <input type="email" class="form-control" id="email" placeholder="Email" name="email" required="true" value="{{ old('email') }}">
+		                </div>
+		            </div>
+		            {{-- End of Email --}}
+		            <div class="form-group">
+						<label>Gioi tinh</label><br>
+		                
+		                  <label class="radio-inline"><input type="radio" name="sex" value="Nam" checked="true">Nam</label>
+		                  <label class="radio-inline"><input type="radio" name="sex" value="Nu" >Nu</label>
+		            </div>
+		            
+		            <div class="form-group">
+		                <label for="username">Password</label>
+		                <div class="input-group">
+		                    <div class="input-group-addon"><i class="fa fa-lock" aria-hidden="true"></i></div>
+		                    <input type="password" class="form-control" id="password" name="password" required="true" placeholder="Password">
+		                </div>
+		            </div>
+		            {{-- End of Password --}}
 					<div class="form-group">
-						<label for="">Category Code:</label>
-						<input type="text" class="form-control" id="categor_code" name="categor_code" placeholder="Nhap .......">
-					</div>
-					<div class="form-group">
-						<label for="">Image:</label>
-						<input type="file" class="form-control" id="imag" name="imag" placeholder="Nhap ......." accept="image/x-png,image/gif,image/jpeg">
-					</div>
-					<div class="form-group">
-						<label for="">Category translate:</label>
-						<input type="text" class="form-control" id="text_valu" name="text_valu" placeholder="Nhap .......">
-					</div>
-					<div class="form-group">
-						<label for="">Category description:</label>
-						<input type="text" class="form-control" id="describe_valu" name="describe_valu" placeholder="Nhap .......">
-					</div>
+		                <label for="username">Coin</label>
+		                <div class="input-group">
+		                    <div class="input-group-addon"><span class="glyphicon glyphicon-usd"></i></div>
+		                    <input type="text" class="form-control" id="coin" name="coin" required="true" placeholder="Nhap coin">
+		                </div>
+		            </div>             
+
+		            <div class="form-group">
+		                <label for="username">Deadline</label>
+		                <div class="input-group">
+		                    <div class="input-group-addon"><span class="glyphicon glyphicon-calendar"></i></div>
+		                    <input type="date" class="form-control" id="deadline" name="deadline" required="true" placeholder="Ngay het han">
+		                </div>
+		            </div>              
+		            {{-- End of Confirm Psssword --}}
+		            <button type="submit" class="btn btn-primary btn-block" style="margin-top: 20px;padding-bottom: 10px">Register</button>
+		        </form>
 					
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-						<button type="button" class="btn btn-primary">Add</button>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
-	<div class="modal fade" id="edit-category">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header edit-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					<h4 class="modal-title">Edit</h4>
 				</div>
-				<form action="{{ url('admin/category/edit') }}" method="POST" role="form">
-				<div class="modal-body">
-					<input type="hidden" name="_method" value="PUT">
-					<input type="hidden" name="catego_id" id="catego_id" value="">
-					<div class="form-group">
-						<label for="">Category Code:</label>
-						<input type="text" class="form-control" id="category_code" name="category_code" placeholder="Nhap .......">
-					</div>
-					<div class="form-group">
-						<label for="">Image:</label>
-						<input type="file" class="form-control" id="image" name="image" placeholder="Nhap ......." accept="image/x-png,image/gif,image/jpeg">
-					</div>
-					<div class="form-group">
-						<label for="">Category translate:</label>
-						<input type="text" class="form-control" id="text_value" name="text_value" placeholder="Nhap .......">
-					</div>
-					<div class="form-group">
-						<label for="">Category description:</label>
-						<input type="text" class="form-control" id="describe_value" name="describe_value" placeholder="Nhap .......">
-					</div>
-					
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-						<button type="button" class="btn btn-primary">Edit</button>
-					</div>
-				</form>
+
 			</div>
 		</div>
 	</div>
@@ -253,8 +268,16 @@
 	</div>
 @endsection
 @section('script')
+	<script src="{{ asset('/js/jquery.validate.min.js') }}"></script>
+    <script src="{{ asset('/js/validate.js') }}" type="text/javascript"></script>
     <script type="text/javascript">
     	$(document).ready(function() {
+    		var table = $('#data-members').DataTable();
+ 
+		    // Apply the search
+		    table.columns().every( function () {
+		        var that = this;
+		    } );
     		$.ajaxSetup({
 			    headers: {
 			        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -287,23 +310,10 @@
     			/* Act on the event */
     			event.preventDefault();
     			var user_id = $(this).parents('.member').children('.user_id_culum').text();
-    			// alert(user_id);
 				var url_ = '/z11app/public/admin/users/'+user_id;
 	    		$.get(url_, function(data) {
 	    			$('.USER_NAME').text(data['profile']['name']);
 	    			$('#delete-user-id').val(data['id']);
-	    		});
-    		});
-    		$('.edit').click(function(event) {
-    			/* Act on the event */
-    			event.preventDefault();
-    			var user_id = $(this).parents('.member').children('.user_id_culum').text();
-    			var url_ = '/z11app/public/admin/users/'+user_id;
-    			$.get(url_, function(data) {
-    				
-	    			// $('#catego_id').val(data['category_id']);
-	    			// $('#category_code').val(data['category_code']);
-	    			// $('#image').val(data['image']);
 	    		});
     		});
     		

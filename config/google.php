@@ -17,9 +17,10 @@ return [
     | https://developers.google.com/console
     |
     */
-    'client_id'       => env('GOOGLE_CLIENT_ID', '345992983001-07npo18cn3kmhmglrn8rot5b09pfbuug.apps.googleusercontent.com'),
-    'client_secret'   => env('GOOGLE_CLIENT_SECRET', 'K6gQPaFtBfPG7n12b2v3g5qd'),
-    'redirect_uri'    => env('GOOGLE_REDIRECT', 'http://localhost/nguyen/z11app/public/test'),
+
+    'client_id'       => env('GOOGLE_CLIENT_ID', '1084347997582-4mvbpdda81bv32075rkclimghf3bv2lf.apps.googleusercontent.com'),
+    'client_secret'   => env('GOOGLE_CLIENT_SECRET', 'KO81-sm-0TrNPwQSBMvANOB2'),
+    'redirect_uri'    => env('GOOGLE_REDIRECT', 'http://localhost/z11app/public/upload'),
     'scopes'          => ['https://www.googleapis.com/auth/drive'],
     'access_type'     => 'offline',
     'approval_prompt' => 'force',
@@ -33,7 +34,9 @@ return [
     | a Server key, and not a Browser key.
     |
     */
-    'developer_key' => env('GOOGLE_DEVELOPER_KEY', 'a7882abe556d0e845c3ef4ce3d84ad6008d7d84b'),
+
+    'developer_key' => env('GOOGLE_DEVELOPER_KEY', '7282f09f2b9b096099913ab0055d715075fc2f94'),
+
 
     /*
     |----------------------------------------------------------------------------
@@ -53,6 +56,8 @@ return [
         /*
         | Path to service account json file
         */
-        'file' => env('GOOGLE_SERVICE_ACCOUNT_JSON_LOCATION', 'google\My Project-a7882abe556d.json')
+
+        'file' => env('GOOGLE_SERVICE_ACCOUNT_JSON_LOCATION', '/drive/elearning.json')
+
     ],
 ];

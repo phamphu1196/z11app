@@ -5,33 +5,61 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use GuzzleHttp\Client as GuzzleHttpClient;
+use GuzzleHttp\Exception\RequestException;
 
 class ChapterController extends Controller
 {
-    public function getchapter(Request $request, $translate_name_text_folder, $translate_name_text_package, $translate_name_text_chapter)
+    public function getListOfGroupQuestion(Request $request, $name_text)
     {
-    	if ($category_code != '') {
-        try {
-            $client = new GuzzleHttpClient();
-            $categories = $client->request('GET', 'http://kien.godfath.com/api/v1/categories/all/0'); 
- 
-            $content = json_decode($categories->getBody()->getContents(), true);
-            $categories= $content['metadata'];
-            $i = 0;
-            foreach ($categories as $value) {
-              $i++;
-                if ($value['category_code'] == $category_code) {
-                    break;
-                }
-            }
 
-            $category= $categories[$i-1];
-            // dd($category);
-            $folders = $category['folder'];
-            return view('frontend.category')->with('category', $category)->with('folders',$folders); 
-	    } catch (RequestException $re) {
-	        echo "con dada";
-	    }
-      }
+        try {           
+            $headers = array('Authorization' =>'Bearer {'.$request->session()->get('token').'}');
+            $client = new GuzzleHttpClient(['headers'=> $headers]);
+
+            // Get chapter with ID
+            $arr = explode('-', $name_text);
+            $chapter_id = end($arr);
+            $chapter = $client->request('GET', 'http://kien.godfath.com/api/v1/chapter/'.$chapter_id);
+            $contents = json_decode($chapter->getBody()->getContents(), true);
+            $chapter = $contents['metadata'];
+            // dd($chapter);
+
+            // Get group question
+            // $folder_id = $package['folder_id'];
+            // $folder = $client->request('GET', 'http://kien.godfath.com/api/v1/folder/'.$folder_id);
+            // $contents = json_decode($folder->getBody()->getContents(), true);
+            // $folder = $contents['metadata'];
+            // dd($folder);
+
+            return view('frontend.chapter')->with('chapter', $chapter);
+        } catch (RequestException $re) {
+            echo "Error!";
+        }     
     }
+
+    // public function postAddChapter(Request $request) {
+    //     try {
+    //         $data = $request->all();
+
+    //         $package_id = $data['package_id'];
+    //         $name_text_id = $data['name_text_id'];
+
+    //         $token = 'Bearer {'.$request->session()->get('token').'}';
+    //         $client = new GuzzleHttpClient();
+    //         $result = $client->post('http://kien.godfath.com/api/v1/chapters', [
+    //             'headers' => ['Authorization' => $token],
+    //             'form_params' => [
+    //                 'package_id' => $package_id,
+    //                 'name_text' => $data['name_text'],
+    //                 'describe_text' => $data['describe_text']
+    //             ]
+    //         ]);
+    //         $result = json_decode($result->getBody(), true);
+    //         return redirect('/package/'.$name_text_id);
+
+    //     } catch (ClientErrorResponseException $exception) {
+    //         $responseBody = $exception->getResponse()->getBody(true);
+    //     }
+    // }
 }

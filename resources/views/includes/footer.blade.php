@@ -29,9 +29,9 @@
 		<div class="col-md-3 col-xs-12 info">
 			<h4>Mạng xã hội</h4>
 			<ul>
-				<li><a href="">Facebook</a></li>
-				<li><a href="">Google</a></li>
-				<li><a href="">Twitter</a></li>
+				<li><a href=""><img src="image\iconfb.png" class="img-circle"> Facebook</a></li>
+				<li><a href=""><img src="image\icongg.png" class="img-circle"> Google</a></li>
+				<li><a href=""><img src="image\icontwitter.png" class="img-circle"> Twitter</a></li>
 			</ul>
 		</div>
 	</div>
@@ -83,5 +83,9 @@
 	    padding: 12px 0 12px 70px;
 	    background-color: #e5e5e5;
 	    border-top: 1px solid #ddd;
+	}
+	.img-circle {
+		width: 38px;
+		height: 36px;
 	}
 </style>
