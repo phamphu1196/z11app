@@ -42,6 +42,7 @@ class UserController extends Controller
                 $request->session()->put('id', $json['metadata']['user']['id']);
                 $request->session()->put('type', $json['metadata']['user']['grant_type']);
                 $request->session()->put('name', $json['metadata']['user']['profile']['name']);
+                $request->session()->put('coin', $json['metadata']['user']['profile']['coin']);
                 $request->session()->put('email', $json['metadata']['user']['email']);
                 $request->session()->put('type_user', $json['metadata']['user']['type_user'][0]['name_role']);
                 $request->session()->put('deadline', $json['metadata']['user']['type_user'][0]['deadline']);

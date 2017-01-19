@@ -83,6 +83,15 @@
             float: left;
             width: 90%;
         }
+        .url-pkg {
+            display: none;
+        }
+        #coin-value {
+            color: red;
+            font-style: italic;
+            font-weight: bold;
+            font-size: 16px;
+        }
     </style>
 @endsection
 
@@ -115,6 +124,7 @@
         <ol class="breadcrumb">
             <?php
                 $category = $folder['category'];
+                $cur_url = 'folder/'.changeTitle($folder['translate_name_text'][$session]['text_value'].' '.$folder['folder_id']);
             ?>
             <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
             <li class="breadcrumb-item">{{ $folder['translate_name_text'][$session]['text_value'] }}</li>
@@ -125,13 +135,24 @@
     </div>
     <div class="clearnfix"></div>
 
+    <!-- Notification -->
+    @if (session('failedNoti'))
+        <div class="alert alert-danger">
+            {{ session('failedNoti') }}
+        </div>
+    @endif
+
     <!-- Show main content -->
     @foreach($folder['package'] as $package)
         <?php
             $folder_id = $package['package_id'];
             $text_value = changeTitle($package['translate_name_text'][$session]['text_value'].' '.$folder_id);
         ?>
-        <a href="{{ url('/package/'.$text_value) }}">
+        <a class="pkg-coin" href="#">
+            <div class="url-pkg">
+                <input type="hidden" class="coin" value="{{ $package['package_cost'] }}">
+                <input type="hidden" class="pkg-link" value="{{ url('/package/'.$text_value) }}">
+            </div>
             <div class="col-md-3 text-center">
                 <div class="panel panel-warning panel-pricing">
                     <img src="{{ asset('image/package-icon.jpg') }}" style="width: 100%;" alt="">
@@ -147,8 +168,36 @@
      @include('includes.sidebar-buttom')
 @endsection
 
-@section('content')     
-    <!-- Modal -->
+@section('content')
+    <!-- Modal buy package -->    
+    <div class="modal fade" id="modal-coin-id">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Xác nhận</h4>
+                </div>
+                
+                <form action="{{ url('confirm-purchase') }}" method="POST" role="form">
+                    <div class="modal-body">                      
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <input type="hidden" name="url" id="url" value="">
+                        <input type="hidden" name="coin" id="coin" value="">
+                        <input type="hidden" name="cur_url" value="{{ $cur_url }}">
+                        <p>Bạn có muốn mua gói này với giá <span id="coin-value" name="coin-value"></span> coin không?</p>                        
+                        {{-- <a id="url" href="#" type="submit" class="btn btn-primary">Mua</a> --}}    
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                        <button type="submit" class="btn btn-primary">Mua</button>
+                    </div>
+                </form>               
+            </div>
+        </div>
+    </div> 
+
+    <!-- Modal Add -->
     <div class="modal fade" id="modal-id">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -187,5 +236,19 @@
 @endsection
 
 @section('script')
-
+    <script>
+        $(document).ready(function() {
+            $('.pkg-coin').click(function(event) {
+                var coin = $(this).children('.url-pkg').children('.coin').val();
+                var redirect = $(this).children('.url-pkg').children('.pkg-link').val();
+                // alert(redirect);
+                if(parseInt(coin) > 0){
+                    $('#modal-coin-id').modal('show');
+                    $("#modal-coin-id #coin-value").html(coin);
+                    $("#modal-coin-id #url").attr('value', redirect);
+                    $("#modal-coin-id #coin").attr('value', coin);
+                }
+            });
+        });
+    </script>
 @stop 
