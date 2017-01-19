@@ -19,7 +19,7 @@
         .edituserid {
             margin-top: 80px;
         }
-        .img-circle {
+        #logo-img {
             border: 2px solid #95a5a6;
         }
         img {
@@ -53,8 +53,12 @@
                                 
                                 <!-- Profile picture -->
                                 <div class="col-xs-4">
-                                    <figure><img class="img-circle img-responsive" id="logo-img" onclick="document.getElementById('avatar').click();" src="{{ asset('image/user-avatar.png') }}" alt=""/></figure>
+                                    <?php
+                                        $src = (session('image')) ? session('image') : "{{ asset('image/user-avatar.png') }}";
+                                    ?>
+                                    <figure><img class="img-responsive" id="logo-img" onclick="document.getElementById('avatar').click();" src="{{ $src }}" alt=""/></figure>
                                     <input type="file" style="display: none" onchange="addNewLogo(this)" id="avatar" name="image" accept="image/*">
+                                    <h4 style="text-align: center; color: blue">Chọn ảnh</h4>
                                 </div>
 
                                 <!-- User information -->

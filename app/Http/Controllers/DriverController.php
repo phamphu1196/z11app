@@ -35,9 +35,10 @@ class DriverController extends Controller
           
        //  	$accessToken = $client->authenticate(Input::get('code'));
        //  	dd($accessToken);
-        	$refreshToken = '1/EQf9qw6bDhAYVVfHZf5k8aFs_mAV2-AGKX6dTAh2Alk';
-        	$client->refreshToken($refreshToken);
+    	$refreshToken = '1/EQf9qw6bDhAYVVfHZf5k8aFs_mAV2-AGKX6dTAh2Alk';
+    	$client->refreshToken($refreshToken);
       	// }
+        
       	if($client->getAccessToken()) {
       		$drive = Google::make('drive');
 	    	  $file = Google::make('Drive_DriveFile');

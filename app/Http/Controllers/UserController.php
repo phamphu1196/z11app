@@ -8,6 +8,7 @@ use App\Http\Requests;
 use GuzzleHttp\Client as GuzzleHttpClient;
 use GuzzleHttp\Exception\RequestException;
 use Guzzle\Http\Exception\ClientErrorResponseException;
+use Google;
 
 
 
@@ -37,15 +38,19 @@ class UserController extends Controller
             $json = json_decode($res->getBody(),true);
             // dd($json);
             if ($json['code'] ==200) {
+                $user = $json['metadata'];
                 $request->session()->put('language','1');
-                $request->session()->put('token', $json['metadata']['token']);
-                $request->session()->put('id', $json['metadata']['user']['id']);
-                $request->session()->put('type', $json['metadata']['user']['grant_type']);
-                $request->session()->put('name', $json['metadata']['user']['profile']['name']);
-                $request->session()->put('coin', $json['metadata']['user']['profile']['coin']);
-                $request->session()->put('email', $json['metadata']['user']['email']);
-                $request->session()->put('type_user', $json['metadata']['user']['type_user'][0]['name_role']);
-                $request->session()->put('deadline', $json['metadata']['user']['type_user'][0]['deadline']);
+                $request->session()->put('token', $user['token']);
+                $request->session()->put('id', $user['user']['id']);
+                $request->session()->put('type', $user['user']['grant_type']);
+                $request->session()->put('name', $user['user']['profile']['name']);
+                $request->session()->put('coin', $user['user']['profile']['coin']);
+                $request->session()->put('email', $user['user']['email']);
+                $request->session()->put('type_user', $user['user']['type_user'][0]['name_role']);
+                $request->session()->put('deadline', $user['user']['type_user'][0]['deadline']);
+                if ($user['user']['profile']['image']) {
+                    $request->session()->put('image', $user['user']['profile']['image']);
+                }
                 return redirect('/');
 
             }else {
@@ -97,20 +102,64 @@ class UserController extends Controller
     	return view('frontend.edituser');
     }
 
+    public function uploadToDrive($request) {
+        $name = $request->file('image')->getClientOriginalName();
+        $request->file('image')->move('drive', 'save.jpg');
+        $client = Google::getClient();
+        $refreshToken = '1/EQf9qw6bDhAYVVfHZf5k8aFs_mAV2-AGKX6dTAh2Alk';
+        $client->refreshToken($refreshToken);
+
+        $drive = Google::make('drive');
+        $file = Google::make('Drive_DriveFile');
+        $file->setName($name);
+        $file->setDescription('Profile picture');
+        $file->setMimeType('image/jpeg');
+        $file->setParents(array('0B4P1fd8eFWewcE9Xa2hZWUVFSUE'));
+        
+        $data = file_get_contents('drive/save.jpg');
+        $createdFile = $drive->files->create($file, array(
+          'data' => $data,
+          'uploadType' => 'media',
+          'mimeType' => 'image/jpeg',
+        ));
+        $id = $createdFile->getId();
+        $image_url = 'https://docs.google.com/uc?export=download&id='.$id;
+
+        return $image_url;
+    }
+
     public function putEditUser(Request $request)
-    {  
+    {
         $token = 'Bearer {'.$request->session()->get('token').'}';
         $client = new GuzzleHttpClient();
-        $result = $client->put('http://kien.godfath.com/api/v1/users/profile', [
-            'headers' => ['Authorization' => $token],
-            'form_params' => ['name' => $request->name],
-            'allow_redirects' => false,
-            'timeout'         => 5
-        ]);
+
+        if ($request->hasFile('image')) {
+            // dd(1);
+            $image_url = $this->uploadToDrive($request);
+        
+            $result = $client->put('http://kien.godfath.com/api/v1/users/profile', [
+                'headers' => ['Authorization' => $token],
+                'form_params' => [
+                    'name' => $request->name,
+                    'image' => $image_url
+                ]
+            ]);
+           
+            $request->session()->put('name', $request->name);
+            $request->session()->put('image', $image_url);
+        }
+        else {
+            $result = $client->put('http://kien.godfath.com/api/v1/users/profile', [
+                'headers' => ['Authorization' => $token],
+                'form_params' => [
+                    'name' => $request->name
+                ]
+            ]);
+            $request->session()->put('name', $request->name);
+        }
+
         $result = json_decode($result->getBody(), true);
         $status = $result['status'];
-        $request->session()->forget('name');
-        $request->session()->put('name', $request->name);
 
         return redirect('/edituser')->with('status', $status);
     }
