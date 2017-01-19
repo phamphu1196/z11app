@@ -44,8 +44,10 @@
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">language<span class="caret" id="language" name="language"></span></a>
 						<ul class="dropdown-menu" role="menu">
+							<?php $i = 0; ?>
 							@foreach($languages as $language)
-								<li><a class="lang" href="#" hreflang="{{ $language['language_id'] }}">{{ $language['description'] }}</a></li>
+								<li><a class="lang" href="#" hreflang="{{ $i }}">{{ $language['description'] }}</a></li>
+							<?php $i++; ?>
 							@endforeach
 						</ul>
 						

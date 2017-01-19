@@ -95,7 +95,6 @@
 
                 event.preventDefault();
                 var language = $(this).attr('hreflang');
-                alert(language);
                 var url_ = '/z11app/public/language';
                 $('.page-body').css('opacity', '0.2');
                 $.post(url_, {
