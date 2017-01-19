@@ -73,10 +73,12 @@
 			width: 90%;
 			margin-left: 20px;
 		}
-		.user_id_culum {
+		.user_culum {
 			width: 15%;
 		}
-
+		.user_id_culum {
+			display: none;
+		}
     </style>
 @endsection
 @section('sidebar-total-top')
@@ -90,6 +92,26 @@
 				<button type="button" class="btn btn-primary" data-toggle="modal" href='#add-member'><span class="	glyphicon glyphicon-plus">Add</span></button>
 			</div>
 		</div>
+		@if (session('noti_add_mod_secc'))
+			<div class="alert alert-success">
+				{{ session('noti_add_mod_secc') }}
+			</div>
+		@endif
+		@if (session('noti_add_mod_fail'))
+			<div class="alert alert-danger">
+				{{ session('noti_add_mod_fail') }}
+			</div>
+		@endif
+		@if (session('noti_secc_delete'))
+			<div class="alert alert-success">
+				{{ session('noti_secc_delete') }}
+			</div>
+		@endif
+		@if (session('noti_fail_delete'))
+			<div class="alert alert-danger">
+				{{ session('noti_fail_delete') }}
+			</div>
+		@endif
 		<div class="content-category">
 			<?php
 				$i =1; 
@@ -97,7 +119,8 @@
 			<table class="table table-hover" id="data-members" class="display" cellspacing="0" width="100%">
 				<thead>
 					<tr>
-						<th class="user_id_culum">STT -sort-</th>
+						<th class="user_culum">STT -sort-</th>
+						<th class="user_id_culum"></th>
 						<th class="user_name_culum">User Name -sort-</th>
 						<th class="user_email_culum">User Email -sort-</th>
 						<th class="type_user_culum">Type User -sort-</th>
@@ -108,7 +131,8 @@
 				<tbody>
 					@foreach($members as $user)
 					<tr class="member">
-						<td class="user_id_culum">{{$i}}</td>
+						<td class="user_culum">{{$i}}</td>
+						<th class="user_id_culum">{{$user['id']}}</th>
 						<td class="user_name_culum">{{ $user['profile']['name'] }}</td>
 						<td class="user_email_culum">{{ $user['email'] }}</td>
 						<td class="type_user_culum">{{ $user['type_user']['name_role'] }}</td>
