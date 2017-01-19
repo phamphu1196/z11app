@@ -1,4 +1,5 @@
-  	</div><!--/col-span-9-->
+  	</div>
+    </div><!--/col-span-9-->
 </div>
 </div>
 <!-- /Main -->

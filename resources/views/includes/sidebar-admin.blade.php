@@ -1,5 +1,5 @@
 <!-- Header -->
-<div id="top-nav" class="navbar navbar-inverse navbar-static-top">
+<div id="top-nav" style="position: fixed; top: 0; width: 100%;" class="navbar navbar-inverse navbar-static-top">
   <div class="container">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -26,6 +26,7 @@
 <!-- Main -->
 <div class="container">
 <div class="row">
+<div class="body-content" style=" margin-top: 70px;">
     <div class="col-md-3">
       <!-- Left column -->
       <a href="{{ url('/') }}"><span class="glyphicon glyphicon-home"><strong>Pages</strong></span></a>  

@@ -64,7 +64,7 @@ class CategoryController extends Controller
 
         $content = json_decode($category->getBody()->getContents(), true);
         $category = $content['metadata'];
-        return $category;
+        return response()->json($category);
     }
 
     public function getAllCategory(Request $request)
@@ -117,9 +117,14 @@ class CategoryController extends Controller
         
     }
 
-    public function putEditCategory()
+    public function putEditCategory(Request $request)
     {
-      
+        $data = $request->all();
+        dd($data);
+        $headers = array('Authorization' =>'Bearer {'.$request->session()->get('token').'}');
+        $client = new GuzzleHttpClient(['headers'=> $headers]);
+        $response = $client->request('GET','http://kien.godfath.com/api/v1/categories'.$data['cat_id']);
+        $res = json_decode($response->getBody()->getContents(), true);
     }
 
     public function deleteCategory(Request $request)
@@ -128,7 +133,7 @@ class CategoryController extends Controller
         $headers = array('Authorization' =>'Bearer {'.$request->session()->get('token').'}');
         $client = new GuzzleHttpClient(['headers'=> $headers,'debug' => true]);
         $response = $client->delete('http://kien.godfath.com/api/v1/categories/'.$data['cat_id']);
-        $res = json_decode($result->getBody()->getContents(), true);
+        $res = json_decode($response->getBody()->getContents(), true);
         if($res['code'] == 200){
             return redirect('admin/categories')->with('noti_secc_delete','xoa thanh cong');
         }

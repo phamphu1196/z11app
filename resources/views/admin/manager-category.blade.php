@@ -6,6 +6,7 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{ asset('/css/sidebar-admin.css') }}">
     <script src="{{ asset('/js/sidebar-admin.js') }}" type="text/javascript"></script>
+    <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
     <style type="text/css">
         .pull-left {
         	float: right;
@@ -27,13 +28,16 @@
         }
 
         .stt {
-        	width: 30%;
+        	width: 10%;
         }
         .edit_culum , .delete_culum, .add_culum{
         	width: 40%;
         }
-        .cate_culum {
-        	width: 60%;
+        .category_code_culum {
+        	width: 40%;
+        }
+        .category_text_value_culum {
+			width: 60%;
         }
         .add-category-button button {
         	float: right;
@@ -41,7 +45,7 @@
         .add-header {
         	background: blue;
         }
-        .category_id_culum{
+        .category_id_culum , .category_describe_value_culum{
         	display: none;
         }
     </style>
@@ -83,12 +87,17 @@
 			@endif
 		
 		<div class="content-category">
-			<table class="table table-hover">
+			<div class="language_div">
+				<input type="hidden" id="language_input" name="language_input" value="{{session('language')}}">
+			</div>
+			<table class="table table-hover" id="data-category" class="display" cellspacing="0" width="100%">
 				<thead>
 					<tr>
 						<th class="stt">STT</th>
 						<th class="category_id_culum"></th>
-						<th class="cate_culum">Category Name</th>
+						<th class="category_code_culum">Category Name</th>
+						<th class="category_text_value_culum">Category Translate</th>
+						<th class="category_describe_value_culum"></th>
 						<th class="edit_culum">Edit</th>
 						<th class="delete_culum">Delete</th>
 					</tr>
@@ -98,10 +107,19 @@
 					<tr class="all-cate-culum">
 						<td class="stt">{{ $i }}</td>
 						<td class="category_id_culum">{{ $category['category_id'] }}</td>
-						<td class="cate_culum">
+						<td class="category_code_culum">{{ $category['category_code'] }}</td>
+						
+						<td class="category_text_value_culum">
 							{{ '{' }}
 							@foreach($category['translate_name_text'] as $translate_name_text)
 								{{ $translate_name_text['language_code']}} => {{ $translate_name_text['text_value'] }} ,
+							@endforeach
+							{{ '}' }}
+						</td>
+						<td class="category_describe_value_culum">
+							{{ '{' }}
+							@foreach($category['translate_describe_text'] as $translate_describe_text)
+								{{ $translate_describe_text['language_code']}} => {{ $translate_describe_text['text_value'] }} ,
 							@endforeach
 							{{ '}' }}
 						</td>
@@ -169,6 +187,7 @@
 				</div>
 				<form action="{{ url('admin/category/edit') }}" method="POST" role="form">
 					<div class="modal-body">
+						<input type="hidden" name="_token" value="{{csrf_token()}}">
 						<input type="hidden" name="_method" value="PUT">
 						<input type="hidden" name="catego_id" id="catego_id" value="">
 						<div class="form-group">
@@ -227,6 +246,12 @@
 @section('script')
     <script type="text/javascript">
     	$(document).ready(function() {
+    		var table = $('#data-category').DataTable();
+ 
+		    // Apply the search
+		    table.columns().every( function () {
+		        var that = this;
+		    } );
     		$.ajaxSetup({
 			    headers: {
 			        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -236,22 +261,28 @@
     			/* Act on the event */
     			event.preventDefault();
     			var category_id = $(this).parents('.all-cate-culum').children('.category_id_culum').text();
+    			var categody_code = $(this).parents('.all-cate-culum').children('.category_code_culum').text();
     			// alert(category_id);
-    			var url = '/z11app/public/admin/category/'+category_id;
+    			// var url = '/z11app/public/admin/category/'+category_id;
     			$('#cat_id').val(category_id);
-	    		$.get(url, function(data) {
-	    			$('.cate_code').text(data['translate_name_text'][0]['text_value'])
-	    		});
+    			$('.cate_code').text(categody_code);
+	    		// $.get(url, function(data) {
+	    		// 	$('.cate_code').text(data['translate_name_text'][0]['text_value'])
+	    		// });
     		});
     		$('.edit').click(function(event) {
     			/* Act on the event */
     			event.preventDefault();
-    			var category_id = $(this).parents('.cate').children('.category_id').val();
-    			var url = '/z11app/public/admin/category/'+category_id;
-    			$.get(url, function(data) {
+    			var language = $(this).parents('.content-category').children('.language_div').children('#language_input').val();
+    			var category_id = $(this).parents('.all-cate-culum').children('.category_id_culum').text();
+    			// alert(language);
+    			var url_ = '/z11app/public/admin/category/'+category_id;
+    			$.get(url_, function(data) {
 	    			$('#catego_id').val(data['category_id']);
-	    			$('#category_code').val(data['category_code']);
-	    			// $('#image').val(data['image']);
+	    			$('#categor_code').val(data['category_code']);
+	    			$('#text_valu').val(data['translate_name_text'][language]['text_value']);
+	    			$('#describ_value').val(data['translate_describe_text'][language]['text_value']);
+
 	    		});
     		});
     		

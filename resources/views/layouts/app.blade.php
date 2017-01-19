@@ -56,7 +56,7 @@
         .banner {
             margin-top: 40px;
         }
-
+        
     </style>
 </head>
 <body id="app-layout">
