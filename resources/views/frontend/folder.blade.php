@@ -239,6 +239,7 @@
     <script>
         $(document).ready(function() {
             $('.pkg-coin').click(function(event) {
+                // alert(1);
                 var coin = $(this).children('.url-pkg').children('.coin').val();
                 var redirect = $(this).children('.url-pkg').children('.pkg-link').val();
                 // alert(redirect);

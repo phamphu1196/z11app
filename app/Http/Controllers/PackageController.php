@@ -58,6 +58,7 @@ class PackageController extends Controller
             ]);
             $result = json_decode($result->getBody(), true);
             $coin_current = $result['coin current'];
+            $request->session()->put('coin', $coin_current);
             return redirect($url)->with('successNoti', "Mua gói thành công. Hiện tại bạn còn ".$coin_current." coin.");
         }
     }

@@ -10,7 +10,6 @@
     <style type="text/css">
         .content-body {
           margin-top: 60px;
-          /*background: #fafafa;*/
         }
         .nav-stacked {
           background: #ffffff;
