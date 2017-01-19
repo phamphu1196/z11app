@@ -25,6 +25,10 @@
         .edit-header {
         	background: blue;
         }
+        #top-nav {
+            position: fixed;
+            top: 0;
+        }
     </style>
 @endsection
 @section('sidebar-total-top')

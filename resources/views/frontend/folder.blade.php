@@ -92,6 +92,19 @@
             font-weight: bold;
             font-size: 16px;
         }
+
+        #modal-coin-id , .modal-content{
+            width: 70%;
+            margin-top: 90px;
+            margin-left: 150px;
+        }
+        .modal-header {
+            background: blue;
+        }
+        .modal-body {
+            width: 90%;
+            margin-left: 10px;
+        }
     </style>
 @endsection
 
